@@ -1,0 +1,32 @@
+import React from 'react';
+import ChatMenuCard from '../components/ChatMenuCard';
+
+const Chat = () => {
+
+  return (
+   <div className="bg-light text-white d-flex flex-column justify-content-center align-items-center py-5">
+
+       <ChatMenuCard
+         title="1:1 랜덤 채팅"
+         description="간단한 명령으로 랜덤한 상대와 1:1 채팅을 할 수 있습니다."
+         to="/chatRoom"
+       />
+
+       <ChatMenuCard
+         title="단체 랜덤 채팅"
+         description="채팅방을 만들어서 여러 사람과 함께 채팅을 할 수 있습니다."
+         to="/community"
+       />
+
+       <ChatMenuCard
+         title="커뮤니티"
+         description="자유롭게 글을 올리고 소통할 수 있는 공간입니다."
+         to="/community"
+       />
+
+     </div>
+
+  );
+};
+
+export default Chat;
