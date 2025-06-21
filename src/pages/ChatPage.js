@@ -1,10 +1,10 @@
 import React from 'react';
-import ChatMenuCard from '../components/ChatMenuCard';
+import ChatMenuCard from '../components/chatPage/ChatMenuCard';
 
-const Chat = () => {
+const ChatPage = () => {
 
   return (
-   <div className="bg-light text-white d-flex flex-column justify-content-center align-items-center py-5">
+   <div className="bg-light text-white d-flex flex-column justify-content-center align-items-center py-5 mt-5">
 
        <ChatMenuCard
          title="1:1 랜덤 채팅"
@@ -29,4 +29,4 @@ const Chat = () => {
   );
 };
 
-export default Chat;
+export default ChatPage;

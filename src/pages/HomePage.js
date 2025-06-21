@@ -1,31 +1,7 @@
 import React from 'react';
 import { FaReact } from 'react-icons/fa';
-import useHomeData from '../hooks/home/useHomeData';
 
-const Home = () => {
-
-// const { mainData, additionalData, loading, error } = useHomeData();
-//
-//  if (loading) {
-//    return <div>Loading...</div>;
-//  }
-//
-//  if (error) {
-//    return <div>Error occurred: {error.message}</div>;
-//  }
-
-
-//       <div>
-//        <h1>홈 페이지</h1>
-//        <section>
-//          <h2>메인 데이터</h2>
-//          <pre>{JSON.stringify(mainData, null, 2)}</pre>
-//        </section>
-//        <section>
-//          <h2>추가 데이터</h2>
-//          <pre>{JSON.stringify(additionalData, null, 2)}</pre>
-//        </section>
-//      </div>
+const HomePage = () => {
 
   return (
   <div>
@@ -73,4 +49,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default HomePage;
