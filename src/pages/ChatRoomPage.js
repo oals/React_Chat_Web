@@ -5,17 +5,18 @@ import MatchingWaitBox from '../components/chatRoomPage/MatchingWaitBox';
 import ChatArchiveSaveBox from '../components/chatArchivePage/ChatArchiveSaveBox';
 import ChatExitMessageBox from '../components/chatRoomPage/ChatExitMessageBox';
 import ChatStartMessageBox from '../components/chatRoomPage/ChatStartMessageBox';
-import { connect, disconnect } from '../stomp/stompManager';
-import { matchStart, matchCancel } from '../utils/api';
+import { connectChat, connectMatching, disconnectChat, disconnectMatching } from '../stomp/stompManager';
+import { matchStart, matchCancel, chatSend } from '../utils/api';
 import { useMember } from '../contexts/MemberContext';
 
 
 const ChatRoomPage = () => {
 
-const { memberId } = useMember();
+ const { memberId } = useMember();
  const [message, setMessage] = useState('');
  const [messageList, setMessageList] = useState([]);
 
+ const [chatRoomId, setChatRoomId] = useState(null);
  const [isExit, setIsExit] = useState(false);
  const scrollRef = useRef(null);
  const [isShowChatSavePopup, setIsShowChatSavePopup] = useState(false);
@@ -23,14 +24,13 @@ const { memberId } = useMember();
 
   useEffect(() => {
     const cleanup = () => {
-      disconnect();     // 소켓 연결 해제
-      matchCancel();    // 매칭 취소 API 호출 (비동기 X, fire and forget)
+      disconnectMatching();
+      disconnectChat();
+      matchCancel();
     };
 
-    // 새로고침·창 닫기 감지
     window.addEventListener('beforeunload', cleanup);
 
-    // 페이지 이동(unmount) 감지
     return () => {
       cleanup();
       window.removeEventListener('beforeunload', cleanup);
@@ -40,11 +40,19 @@ const { memberId } = useMember();
   useEffect(() => {
      const start = async () => {
         try {
-          await connect(memberId, (chatRoomDto) => {
-            alert('매칭 완료');
-            console.log(chatRoomDto);
-            setIsMatching(true);
+        await connectMatching(memberId, async (chatRoomDto) => {
+
+          setIsMatching(true);
+          setChatRoomId(chatRoomDto.chatRoomId);
+
+          await connectChat(chatRoomDto.chatRoomId, memberId, (msg) => {
+
+            setMessageList((prev) => [
+              ...prev,
+              { sender: 'other', text: msg }
+            ]);
           });
+        });
 
           await matchStart();
 
@@ -75,6 +83,8 @@ const { memberId } = useMember();
     if (message.toLowerCase() === 'q') {
         setIsExit(true)
     } else {
+       chatSend(chatRoomId, message);
+
        setMessageList((prev) => [
          ...prev,
          { sender: 'me', text: message }

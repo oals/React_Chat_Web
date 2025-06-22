@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import { formatTime } from '../../utils/comnUtils';
 import { useNavigate } from 'react-router-dom';
 import { matchCancel } from '../../utils/api';
-import { disconnect } from '../../stomp/stompManager';
+import { disconnectMatching } from '../../stomp/stompManager';
 
 const MatchingWaitBox = ({isMatching}) => {
 
@@ -36,9 +36,9 @@ const MatchingWaitBox = ({isMatching}) => {
               className="btn btn-info text-light"
               onClick={async () => {
                 try {
-                  await matchCancel();     // 매칭 취소 API 호출 (fetch 또는 axios 등)
-                  disconnect();            // 웹소켓 연결 해제 (프로미스 반환 안 해도 괜찮음)
-                  navigate('/chat');       // 이동
+                  await matchCancel();
+                  disconnectMatching();
+                  navigate('/chat');
                 } catch (err) {
                   console.error('매칭 종료 중 오류 발생:', err);
                 }

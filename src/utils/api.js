@@ -17,6 +17,17 @@ export function matchCancel() {
   });
 }
 
+export function chatSend(chatRoomId, chatMessage) {
+  return apiClient(`${BASE_API_URL}/api/chat/send`, {
+    method: 'POST',
+    credentials: 'include',
+    body: {
+        'chatRoomId' : chatRoomId,
+        'chatMessage' : chatMessage,
+    }
+  });
+}
+
 export function fireBaseAuthing(idToken) {
   return apiClient(`${BASE_API_URL}/api/auth/fireBase`, {
     method: 'POST',
