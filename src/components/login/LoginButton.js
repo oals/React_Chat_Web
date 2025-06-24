@@ -2,10 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { signInWithPopup, signOut, onAuthStateChanged, setPersistence, browserSessionPersistence, getAuth } from 'firebase/auth';
 import { auth, provider } from '../../firebase/firebaseConfig';
 import { fireBaseAuthing, clearCookie } from '../../utils/api';
+import { useNavigate } from 'react-router-dom';
+import { useMember, fetchMemberId } from '../../contexts/MemberContext';
 
 const LoginButton = () => {
 
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+  const { setMemberId, setIsLoading } = useMember();
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
@@ -30,6 +35,7 @@ const LoginButton = () => {
 
      if (await res.status === 200) {
        setUser(result.user);
+       fetchMemberId(setMemberId,setIsLoading);
      }
 
     } catch (error) {
@@ -44,6 +50,11 @@ const LoginButton = () => {
         await clearCookie();
 
         setUser(null);
+
+        fetchMemberId(setMemberId,setIsLoading);
+
+        navigate('/');
+
       } catch (error) {
         console.error("로그아웃 실패:", error);
       }

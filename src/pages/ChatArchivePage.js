@@ -1,167 +1,139 @@
 import React from 'react';
-import ChatArchive from '../models/ChatArchive'; // 또는 올바른 경로로
-import { useState, useRef } from 'react';
-import ChatMessage from '../components/chatRoomPage/ChatMessage';
+import { useState, useEffect, useCallback } from 'react';
+import ChatArchiveBox from '../components/chatArchivePage/ChatArchiveBox';
+import { getChatArchive, setChatArchiveBookmarks, delChatArchive } from '../utils/api';
+import { useAlert } from '../components/AlertProvider';
+import Pagination from '../components/Pagination';
 
 const ChatArchivePage = () => {
 
    const [isChatArchiveOpen, setIsChatArchiveOpen] = useState(false);
-   const scrollRef = useRef(null);
+   const [chatArchives, setChatArchives] = useState([]);
+   const [totalCount, setTotalCount] = useState(0);
+   const [chatArchiveId, setChatArchiveId] = useState(null);
+   const [currentPage, setCurrentPage] = useState(1);
+   const [chatArchivesOption, setChatArchivesOption] = useState(false);
+   const { alert } = useAlert();
 
-   const archivesData = [
-     {
-       archiveId: 3,
-       archiveTitle: '재밌는 사람과 대화',
-       archiveDate: '2025-06-19 02:23',
-       isArchiveBookmarks: false,
-     },
-     {
-       archiveId: 2,
-       archiveTitle: '유익한 대화 기록',
-       archiveDate: '2025-06-20 10:30',
-       isArchiveBookmarks: true,
-     },
-     {
-       archiveId: 1,
-       archiveTitle: '마음에 남는 토크',
-       archiveDate: '2025-06-21 15:45',
-       isArchiveBookmarks: false,
-     },
+  const fetchChatArchive = useCallback(async (page) => {
+    try {
+      const res = await getChatArchive(chatArchivesOption, page);
+      const data = await res.json();
+      setChatArchives(data.chatArchiveDtoList);
+      setTotalCount(data.totalCount);
+    } catch (error) {
+      console.error('채팅 아카이브 가져오기 실패:', error);
+    }
+  }, [chatArchivesOption]);
 
-   ];
+   useEffect(() => {
+     fetchChatArchive(1);
+   }, [chatArchivesOption, fetchChatArchive]);
 
-   // ChatArchive 인스턴스 배열 생성
-   const chatArchives = [];
-   for (let i = 0; i < archivesData.length; i++) {
-     chatArchives.push(new ChatArchive(archivesData[i]));
-   }
+  const handleToggleBookmark = (chatArchiveId) => {
+    setChatArchives(prev =>
+      prev.map(item =>
+        item.chatArchiveId === chatArchiveId
+          ? { ...item, chatArchiveBookmarks: !item.chatArchiveBookmarks }
+          : item
+      )
+    );
+  };
 
    return (
-     <div className="mt-3 d-flex flex-column justify-content-center align-items-center">
-
+      <div className="d-flex flex-column justify-content-start align-items-center min-vh-100 pt-5 bg-light">
 
       {isChatArchiveOpen && (
-            <div className=" position-fixed top-50 start-50 translate-middle p-4 bg-white border rounded shadow" style={{ zIndex: 1051, width: '700px', height: '700px' }}>
+        <ChatArchiveBox
+            chatArchiveId={chatArchiveId}
+            chatArchiveOpenCallBack={() => setIsChatArchiveOpen(false)}
+        />
+      )}
+
+      <div className="w-75">
+      <div className="w-25 align-self-start mb-2">
+         <div className="d-flex gap-2">
+           <button
+             className={`btn ${!chatArchivesOption ? 'btn-primary active' : 'btn-outline-primary'}`}
+             onClick={() => setChatArchivesOption(false)}
+           >
+             전체
+           </button>
+
+           <button
+             className={`btn ${chatArchivesOption ? 'btn-primary active' : 'btn-outline-primary'}`}
+             onClick={() => setChatArchivesOption(true)}
+           >
+             즐겨찾기
+           </button>
+         </div>
+
+      </div>
+        <table className="table table-bordered table-hover bg-white shadow">
+          <thead >
+            <tr>
+              <th scope="col" className="text-center">#</th>
+              <th scope="col">제목</th>
+              <th scope="col">저장일시</th>
+              <th scope="col" className="text-center">즐겨찾기</th>
+              <th scope="col" className="text-center">삭제</th>
+            </tr>
+          </thead>
+          <tbody>
+           {chatArchives.map((chatArchive, index) => (
+             <tr
+               key={chatArchive.chatArchiveId}
+             >
+               <th scope="row" className="text-center">{totalCount - ((currentPage - 1) * 10) - index} </th>
+               <td
+
+                 className=" fw-semibold"
+                 style={{ cursor: 'pointer' }}
+                onClick={() => {
+                    setChatArchiveId(chatArchive.chatArchiveId)
+                    setIsChatArchiveOpen(true)
+                }}
 
 
-              <div
-                  ref={scrollRef}
-                     className="bg-white p-3"
-                     style={{ height: '600px', overflowY: 'auto' }}
-                   >
-
-                   <ChatMessage messages={[
-                     { sender: 'me', text: '안녕하세요!' },
-                     { sender: 'you', text: '반가워요 😊' },
-
-                   ]} />
-              </div>
-
-
-              <div className="d-flex justify-content-center gap-2 pt-3">
-
-                  <button className="btn btn-secondary" onClick={() => setIsChatArchiveOpen(false)}>
-                      닫기
-                  </button>
-
-              </div>
-            </div>
-          )}
-
-
-      <div className="d-flex justify-content-center flex-wrap gap-3 mt-5 mb-4 " style={{width:"1100px"}}>
-        {chatArchives.map((chatArchive, index) => (
-          <div
-            key={index}
-            className="border rounded shadow-sm p-3 bg-white"
-            style={{ width: '250px', position: 'relative' }}
-            onClick={() => setIsChatArchiveOpen(true)}
-          >
-            <h5
-              style={{ cursor: 'pointer', color: '#007bff' }}
-            >
-              {chatArchive.archiveTitle}
-            </h5>
-            <p className="text-muted small mb-2">ID: {chatArchive.archiveId}</p>
-            <p className="mb-2">저장 시간: {chatArchive.archiveDate}</p>
-            <div
-              style={{
-                position: 'absolute',
-                top: '10px',
-                right: '10px',
-                cursor: 'pointer',
-              }}
-              onClick={() =>
-                alert(
-                  chatArchive.isArchiveBookmarks
-                    ? '즐겨찾기 해제'
-                    : '즐겨찾기 추가'
-                )
-              }
-            >
-              {chatArchive.isArchiveBookmarks ? (
-                <i className="bi bi-star-fill" style={{ color: 'gold', fontSize: '1.5rem' }}></i>
-              ) : (
-                <i className="bi bi-star" style={{ fontSize: '1.5rem' }}></i>
-              )}
-            </div>
-          </div>
-        ))}
+                >{chatArchive.chatArchiveTitle}</td>
+               <td>{chatArchive.chatArchiveDate.replace("T"," ")}</td>
+               <td className="text-center">
+                 <i
+                   className={chatArchive.chatArchiveBookmarks ? "bi bi-star-fill" : "bi bi-star"}
+                   style={{ color: chatArchive.chatArchiveBookmarks ? 'gold' : 'inherit', fontSize: '1.5rem' }}
+                   onClick={(e) => {
+                     setChatArchiveBookmarks(chatArchive.chatArchiveId)
+                     handleToggleBookmark(chatArchive.chatArchiveId);
+                     if (!chatArchive.chatArchiveBookmarks) {
+                        alert('즐겨찾기가 완료되었습니다')
+                     }
+                   }}
+                 ></i>
+               </td>
+                 <td className="text-center">
+                    <i
+                       onClick={(e) => {
+                         delChatArchive(chatArchive.chatArchiveId)
+                          fetchChatArchive(currentPage)
+                         alert('즐겨찾기에서 삭제되었습니다')
+                       }}
+                       class="bi bi-trash"
+                       style={{ fontSize: '1.5rem' }}
+                    ></i>
+                 </td>
+             </tr>
+           ))}
+          </tbody>
+        </table>
       </div>
 
-
-       <nav aria-label="Page navigation example">
-         <ul className="pagination">
-           <li className="page-item">
-             <button
-               type="button"
-               className="page-link"
-               aria-label="Previous"
-               onClick={() => alert('prev')}
-             >
-               <span aria-hidden="true">&laquo;</span>
-             </button>
-           </li>
-           <li className="page-item">
-             <button
-               type="button"
-               className="page-link"
-               onClick={() => alert('1')}
-
-             >
-               1
-             </button>
-           </li>
-           <li className="page-item">
-             <button
-               type="button"
-               className="page-link"
-                onClick={() => alert('2')}
-             >
-               2
-             </button>
-           </li>
-           <li className="page-item">
-             <button
-               type="button"
-               className="page-link"
-                onClick={() => alert('3')}
-             >
-               3
-             </button>
-           </li>
-           <li className="page-item">
-             <button
-               type="button"
-               className="page-link"
-               aria-label="Next"
-            onClick={() => alert('next')}
-             >
-               <span aria-hidden="true">&raquo;</span>
-             </button>
-           </li>
-         </ul>
-       </nav>
+     <Pagination
+       totalPages={Math.ceil(totalCount / 10)}
+       onPageChange={(page) => {
+       setCurrentPage(page)
+         fetchChatArchive(page)
+       }}
+     />
 
      </div>
    );

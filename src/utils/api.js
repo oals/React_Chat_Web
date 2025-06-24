@@ -40,6 +40,7 @@ export function fireBaseAuthing(idToken) {
 export function clearCookie() {
   return apiClient(`${BASE_API_URL}/api/cookie/clear`, {
     method: 'DELETE',
+    credentials: 'include'
     })
 }
 
@@ -47,6 +48,50 @@ export function getMemberId() {
   return apiClient(`${BASE_API_URL}/api/cookie/getMemberId`, {
     method: 'GET',
     credentials: 'include'
+    })
+}
+
+export function chatSave(chatArchiveTitle) {
+  return apiClient(`${BASE_API_URL}/api/chat/save`, {
+    method: 'POST',
+    credentials: 'include',
+     body: {
+         'chatArchiveTitle' : chatArchiveTitle,
+     }
+    })
+}
+
+export function getChatArchive(isBookmarks,page) {
+  return apiClient(`${BASE_API_URL}/api/chat/getChatArchive?chatArchiveBookmarks=${isBookmarks}&page=${page}`, {
+    method: 'GET',
+    credentials: 'include',
+    })
+}
+
+export function setChatArchiveBookmarks(chatArchiveId) {
+  return apiClient(`${BASE_API_URL}/api/chat/setChatArchiveBookmarks`, {
+    method: 'POST',
+    credentials: 'include',
+    body: {
+             'chatArchiveId' : chatArchiveId,
+         }
+    })
+}
+
+export function delChatArchive(chatArchiveId) {
+  return apiClient(`${BASE_API_URL}/api/chat/delChatArchive`, {
+    method: 'POST',
+    credentials: 'include',
+    body: {
+             'chatArchiveId' : chatArchiveId,
+         }
+    })
+}
+
+export function getChatArchiveMessage(chatArchiveId) {
+  return apiClient(`${BASE_API_URL}/api/chat/getChatArchiveMessage?chatArchiveId=${chatArchiveId}`, {
+    method: 'GET',
+    credentials: 'include',
     })
 }
 

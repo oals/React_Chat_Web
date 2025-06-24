@@ -6,31 +6,34 @@ import ChatArchiveSaveBox from '../components/chatArchivePage/ChatArchiveSaveBox
 import ChatExitMessageBox from '../components/chatRoomPage/ChatExitMessageBox';
 import ChatStartMessageBox from '../components/chatRoomPage/ChatStartMessageBox';
 import { connectChat, connectMatching, disconnectChat, disconnectMatching } from '../stomp/stompManager';
-import { matchStart, matchCancel, chatSend } from '../utils/api';
+import { matchStart, matchCancel, chatSend, chatSave } from '../utils/api';
 import { useMember } from '../contexts/MemberContext';
-
+import { useAlert } from '../components/AlertProvider';
 
 const ChatRoomPage = () => {
 
  const { memberId } = useMember();
  const [message, setMessage] = useState('');
  const [messageList, setMessageList] = useState([]);
-
  const [chatRoomId, setChatRoomId] = useState(null);
  const [isExit, setIsExit] = useState(false);
  const scrollRef = useRef(null);
  const [isShowChatSavePopup, setIsShowChatSavePopup] = useState(false);
  const [isMatching, setIsMatching] = useState(false);
+ const [isChatArchiveSave, setIsChatArchiveSave] = useState(false);
+ const isMatchingRef = useRef(isMatching);
+ const { alert } = useAlert();
 
   useEffect(() => {
     const cleanup = () => {
+      if (!isMatchingRef.current) {
+         matchCancel();
+      }
       disconnectMatching();
       disconnectChat();
-      matchCancel();
+
     };
-
     window.addEventListener('beforeunload', cleanup);
-
     return () => {
       cleanup();
       window.removeEventListener('beforeunload', cleanup);
@@ -41,21 +44,22 @@ const ChatRoomPage = () => {
      const start = async () => {
         try {
         await connectMatching(memberId, async (chatRoomDto) => {
-
           setIsMatching(true);
           setChatRoomId(chatRoomDto.chatRoomId);
-
+          alert('매칭이 완료 되었습니다')
           await connectChat(chatRoomDto.chatRoomId, memberId, (msg) => {
-
-            setMessageList((prev) => [
-              ...prev,
-              { sender: 'other', text: msg }
-            ]);
+             if (msg.toLowerCase() === 'q') {
+                setIsExit(true)
+                alert('대화가 종료 되었습니다')
+             } else {
+                setMessageList((prev) => [
+                  ...prev,
+                  { sender: 'other', text: msg }
+                ]);
+              }
+            });
           });
-        });
-
           await matchStart();
-
           } catch (err) {
             console.error('연결 실패 또는 매칭 시작 실패:', err);
           }
@@ -70,6 +74,10 @@ const ChatRoomPage = () => {
    }
  }, [messageList]);
 
+  useEffect(() => {
+    isMatchingRef.current = isMatching;
+  }, [isMatching]);
+
 
   const handleChange = (e) => {
     setMessage(e.target.value);
@@ -77,19 +85,19 @@ const ChatRoomPage = () => {
 
   const handleSend = () => {
 
-   if (message.trim() === '')
-    return;
+   if (message.trim() === '') return;
 
     if (message.toLowerCase() === 'q') {
         setIsExit(true)
-    } else {
-       chatSend(chatRoomId, message);
-
-       setMessageList((prev) => [
-         ...prev,
-         { sender: 'me', text: message }
-       ]);
+        alert('대화가 종료 되었습니다')
     }
+
+    chatSend(chatRoomId, message);
+
+    setMessageList((prev) => [
+      ...prev,
+      { sender: 'me', text: message }
+    ]);
 
     setMessage('');
   };
@@ -123,17 +131,33 @@ const ChatRoomPage = () => {
 
       </div>
 
+    {isShowChatSavePopup && (
+      <ChatArchiveSaveBox
+        showChatSavePopupOpenCallBack={() => setIsShowChatSavePopup(false)}
+        chatSaveCallBack={(chatArchiveTitle) => {
+          if (!isChatArchiveSave) {
+            chatSave(chatArchiveTitle)
+            setIsChatArchiveSave(true)
+            setIsShowChatSavePopup(false)
+            alert('저장 되었습니다')
+          } else {
+            alert('이미 저장된 대화 입니다')
+          }
 
-
-     {isShowChatSavePopup && (
-        <ChatArchiveSaveBox
-          callBack={() => setIsShowChatSavePopup(true)}
-        />
-     )}
+        }}
+      />
+    )}
 
      {isExit && (
          <ChatExitMessageBox
-         callBack={() => setIsShowChatSavePopup(true)}
+           isReMatching={() => {
+              setMessageList([])
+              disconnectChat();
+              setIsExit(false)
+              setIsMatching(false)
+              setIsChatArchiveSave(false)
+           }}
+           setIsShowChatSavePopupOpenCallBack={() => setIsShowChatSavePopup(true)}
          />
      )}
 

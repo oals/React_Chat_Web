@@ -1,9 +1,9 @@
 import React from 'react';
 import { useState } from 'react';
 
-const ChatArchiveSaveBox = ({callBack}) => {
+const ChatArchiveSaveBox = ({showChatSavePopupOpenCallBack, chatSaveCallBack}) => {
 
-  const [chatTitle, setChatTitle] = useState("");
+  const [chatArchiveTitle, setChatArchiveTitle] = useState("");
 
   return (
     <div className="position-fixed top-50 start-50 translate-middle p-4 bg-white border rounded shadow" style={{ zIndex: 1050, width: '500px' }}>
@@ -13,8 +13,8 @@ const ChatArchiveSaveBox = ({callBack}) => {
                 type="text"
                 className="form-control mb-3 px-4 py-2 rounded-3 shadow-sm border border-secondary-subtle focus-ring focus-ring-primary"
                 placeholder="ex) 재밌는 사람과 대화"
-                value={chatTitle}
-                onChange={(e) => setChatTitle(e.target.value)}
+                value={chatArchiveTitle}
+                onChange={(e) => setChatArchiveTitle(e.target.value)}
                 style={{
                   fontSize: '15px',
                   backgroundColor: '#f9f9f9',
@@ -23,10 +23,10 @@ const ChatArchiveSaveBox = ({callBack}) => {
               />
 
             <div className="d-flex justify-content-end gap-2">
-            <button className="btn btn-primary">
+            <button className="btn btn-primary" onClick={()=> chatSaveCallBack(chatArchiveTitle)}>
                저장
              </button>
-             <button className="btn btn-secondary" onClick={() => callBack(false)}>
+             <button className="btn btn-secondary" onClick={() => showChatSavePopupOpenCallBack()}>
                닫기
              </button>
 

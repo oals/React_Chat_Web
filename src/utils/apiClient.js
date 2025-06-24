@@ -23,9 +23,15 @@ export async function apiClient(
   const res = await fetch(`${endpoint}`, config);
 
   if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(errText || res.statusText);
-  }
+      const errText = await res.text();
+
+      if (res.status === 401) {
+        return res;
+      }
+
+      throw new Error(errText || res.statusText);
+    }
+
 
   return res;
 }

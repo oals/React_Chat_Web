@@ -1,10 +1,10 @@
 
 export default class ChatArchive {
-  constructor({ archiveId, archiveTitle, archiveDate, isArchiveBookmarks }) {
-    this.archiveId = archiveId;
-    this.archiveTitle = archiveTitle;
-    this.archiveDate = archiveDate;
-    this.isArchiveBookmarks = isArchiveBookmarks;
+  constructor({ chatArchiveId, chatArchiveTitle, chatArchiveDate, chatArchiveBookmarks }) {
+    this.chatArchiveId = chatArchiveId;
+    this.chatArchiveTitle = chatArchiveTitle;
+    this.chatArchiveDate = chatArchiveDate;
+    this.isChatArchiveBookmarks = chatArchiveBookmarks;
   }
 
 }

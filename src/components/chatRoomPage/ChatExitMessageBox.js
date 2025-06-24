@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ChatExitMessageBox = ({callBack}) => {
+const ChatExitMessageBox = ({isReMatching, setIsShowChatSavePopupOpenCallBack}) => {
 
   return (
         <div className="text-center border border-info m-3 p-3" style={{height: "150px"}} >
@@ -10,12 +10,14 @@ const ChatExitMessageBox = ({callBack}) => {
            <br/>
            <div>
             <button
+                onClick={isReMatching}
                className="btn btn-info text-light m-3"
-               style={{ minWidth: '80px' }}>
+               style={{ minWidth: '80px' }}
+               >
                다시 매칭
             </button>
             <button
-              onClick={() => callBack(true)}
+              onClick={() => setIsShowChatSavePopupOpenCallBack()}
               className="btn btn-info text-light m-3"
               style={{ minWidth: '80px' }}>
               대화 저장

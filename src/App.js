@@ -8,6 +8,8 @@ import ChatRoomPage from './pages/ChatRoomPage';
 import ChatArchivePage from './pages/ChatArchivePage';
 import CommunityPage from './pages/CommunityPage';
 import { MemberProvider } from './contexts/MemberContext';
+import { AlertProvider } from './components/AlertProvider';
+import PrivateRoute from './route/PrivateRoute';
 
 
 function App() {
@@ -16,18 +18,49 @@ function App() {
    <MemberProvider>
        <Router>
           <NavigationBar />
+          <AlertProvider>
           <div class="d-flex flex-column min-vh-100">
                <main className="mt-5 flex-grow-1">
                  <Routes>
                    <Route path="/" element={<HomePage />} />
-                   <Route path="/chat" element={<ChatPage />} />
-                   <Route path="/chatRoom" element={<ChatRoomPage />} />
-                   <Route path="/chatArchive" element={<ChatArchivePage />} />
-                   <Route path="/community" element={<CommunityPage />} />
+                   <Route path="/chat"
+                     element={
+                       <PrivateRoute>
+                         <ChatPage />
+                       </PrivateRoute>
+                     }
+                   />
+
+                   <Route path="/chatRoom"
+                       element={
+                         <PrivateRoute>
+                           <ChatRoomPage />
+                         </PrivateRoute>
+                       }
+                     />
+
+                   <Route path="/chatArchive"
+                     element={
+                       <PrivateRoute>
+                         <ChatArchivePage />
+                       </PrivateRoute>
+                     }
+                   />
+
+                   <Route path="/community"
+                     element={
+                       <PrivateRoute>
+                         <CommunityPage />
+                       </PrivateRoute>
+                     }
+                   />
+
+
                  </Routes>
                </main>
                <Footer />
            </div>
+           </AlertProvider>
         </Router>
    </MemberProvider>
   );
