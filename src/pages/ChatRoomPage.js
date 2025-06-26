@@ -47,14 +47,15 @@ const ChatRoomPage = () => {
           setIsMatching(true);
           setChatRoomId(chatRoomDto.chatRoomId);
           alert('매칭이 완료 되었습니다')
-          await connectChat(chatRoomDto.chatRoomId, memberId, (msg) => {
+
+          await connectChat(`/topic/chat/${chatRoomDto.chatRoomId}`, memberId, (msg, senderId) => {
              if (msg.toLowerCase() === 'q') {
                 setIsExit(true)
                 alert('대화가 종료 되었습니다')
              } else {
                 setMessageList((prev) => [
                   ...prev,
-                  { sender: 'other', text: msg }
+                  {senderId : senderId, sender: 'other', text: msg }
                 ]);
               }
             });
@@ -112,7 +113,9 @@ const ChatRoomPage = () => {
      >
 
      {isMatching && (
-       <ChatStartMessageBox />
+        <ChatStartMessageBox
+            startDate={new Date().toISOString().slice(0, 19).replace("T"," ")}
+        />
     )}
 
       {!isMatching && (
@@ -136,7 +139,7 @@ const ChatRoomPage = () => {
         showChatSavePopupOpenCallBack={() => setIsShowChatSavePopup(false)}
         chatSaveCallBack={(chatArchiveTitle) => {
           if (!isChatArchiveSave) {
-            chatSave(chatArchiveTitle)
+            chatSave(chatArchiveTitle,JSON.stringify(messageList))
             setIsChatArchiveSave(true)
             setIsShowChatSavePopup(false)
             alert('저장 되었습니다')

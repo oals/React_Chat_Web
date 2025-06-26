@@ -115,7 +115,7 @@ const ChatArchivePage = () => {
                        onClick={(e) => {
                          delChatArchive(chatArchive.chatArchiveId)
                           fetchChatArchive(currentPage)
-                         alert('즐겨찾기에서 삭제되었습니다')
+                         alert('삭제되었습니다')
                        }}
                        class="bi bi-trash"
                        style={{ fontSize: '1.5rem' }}

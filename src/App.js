@@ -6,7 +6,7 @@ import HomePage from './pages/HomePage';
 import ChatPage from './pages/ChatPage';
 import ChatRoomPage from './pages/ChatRoomPage';
 import ChatArchivePage from './pages/ChatArchivePage';
-import CommunityPage from './pages/CommunityPage';
+import GroupChatPage from './pages/GroupChatPage';
 import { MemberProvider } from './contexts/MemberContext';
 import { AlertProvider } from './components/AlertProvider';
 import PrivateRoute from './route/PrivateRoute';
@@ -47,10 +47,10 @@ function App() {
                      }
                    />
 
-                   <Route path="/community"
+                   <Route path="/groupChatPage"
                      element={
                        <PrivateRoute>
-                         <CommunityPage />
+                         <GroupChatPage />
                        </PrivateRoute>
                      }
                    />

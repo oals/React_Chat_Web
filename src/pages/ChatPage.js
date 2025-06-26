@@ -13,15 +13,15 @@ const ChatPage = () => {
        />
 
        <ChatMenuCard
-         title="단체 랜덤 채팅"
+         title="단체 채팅"
          description="채팅방을 만들어서 여러 사람과 함께 채팅을 할 수 있습니다."
-         to="/community"
+         to="/groupChatPage"
        />
 
        <ChatMenuCard
-         title="커뮤니티"
-         description="자유롭게 글을 올리고 소통할 수 있는 공간입니다."
-         to="/community"
+         title="아카이브"
+         description="저장한 대화 내용을 확인 할 수 있는 공간입니다."
+         to="/chatArchive"
        />
 
      </div>

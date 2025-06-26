@@ -40,9 +40,7 @@ const NavigationBar = () => {
                 <Link to="/chatArchive" style={{ marginRight: '1rem' }} className="fw-semibold link-offset-2 link-underline link-underline-opacity-0">
                   Archive
                 </Link>
-                <Link to="/community" className="fw-semibold link-offset-2 link-underline link-underline-opacity-0">
-                  Community
-                </Link>
+
 
             </>
         )}

@@ -27,17 +27,16 @@ const HomePage = () => {
 
             <div className="text-center mt-5">
                 <FaReact style={{ fontSize: '5rem', color: '#61DBFB' }} />
-                <h4 className=" d-flex justify-content-center m-3 text-info">등록하기</h4>
-            </div>
-
-            <div className="text-center mt-5">
-                <FaReact style={{ fontSize: '5rem', color: '#61DBFB' }} />
-                <h4 className=" d-flex justify-content-center m-3 text-info">커뮤니티</h4>
+                <h4 className=" d-flex justify-content-center m-3 text-info">랜덤 채팅</h4>
+                <h5 className=" d-flex justify-content-center m-3 text-info">시작하기 버튼을 클릭하면 지금 즉시 랜덤채팅을 시작할 수 있습니다.</h5>
+                <h5 className=" d-flex justify-content-center m-3 text-info"> 완벽한 프라이버시가 존중되는 공간에서 낯선 상대와 1:1 대화를 나눠보세요.</h5>
             </div>
 
             <div className="text-center mt-5">
                   <FaReact style={{ fontSize: '5rem', color: '#61DBFB' }} />
-                  <h4 className=" d-flex justify-content-center m-3 text-info">등록하기</h4>
+                  <h4 className=" d-flex justify-content-center m-3 text-info">아카이브</h4>
+                  <h5 className=" d-flex justify-content-center m-3 text-info">시작하기 버튼을 클릭하면 지금 즉시 랜덤채팅을 시작할 수 있습니다.</h5>
+                  <h5 className=" d-flex justify-content-center m-3 text-info"> 완벽한 프라이버시가 존중되는 공간에서 낯선 상대와 1:1 대화를 나눠보세요.</h5>
             </div>
 
        </div>

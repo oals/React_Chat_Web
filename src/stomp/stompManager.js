@@ -40,7 +40,7 @@ export const connectMatching = (userId, onMatchReceived) => {
     });
 };
 
-export const connectChat = (chatRoomId, memberId , onMatchReceived) => {
+export const connectChat = (topic, memberId, onMatchReceived) => {
     return new Promise((resolve, reject) => {
 
      if (chatClient && chatSubscribed) {
@@ -54,11 +54,10 @@ export const connectChat = (chatRoomId, memberId , onMatchReceived) => {
         reconnectDelay: 5000,
         onConnect: () => {
            if (!chatSubscribed) {
-           console.log(`연결된 채팅방 아이디 : ${chatRoomId}`);
-             chatClient.subscribe(`/topic/chat/${chatRoomId}`, (msg) => {
+             chatClient.subscribe(topic, (msg) => {
                const parsed = JSON.parse(msg.body);
                if (String(parsed.memberId) !== String(memberId)) {
-                 onMatchReceived(parsed.chatMessage);
+                 onMatchReceived(parsed.chatMessage,parsed.memberId);
                }
              });
              chatSubscribed = true;
