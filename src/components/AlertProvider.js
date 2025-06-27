@@ -38,8 +38,16 @@ const FadeOutAlert = ({ message }) => {
 
   return (
     <div
-      className={`alert alert-info alert-dismissible fade ${visible ? 'show' : ''} text-center`}
+      className={`alert alert-info alert-dismissible fade ${visible ? 'show' : ''}`}
       role="alert"
+      style={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        textAlign: 'center',
+        paddingRight: '1rem',
+        paddingLeft: '1rem'
+      }}
     >
       {message}
     </div>

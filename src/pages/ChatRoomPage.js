@@ -23,6 +23,7 @@ const ChatRoomPage = () => {
  const [isChatArchiveSave, setIsChatArchiveSave] = useState(false);
  const isMatchingRef = useRef(isMatching);
  const { alert } = useAlert();
+ const [chatStartTime, setChatStartTime] = useState(null);
 
   useEffect(() => {
     const cleanup = () => {
@@ -47,15 +48,16 @@ const ChatRoomPage = () => {
           setIsMatching(true);
           setChatRoomId(chatRoomDto.chatRoomId);
           alert('매칭이 완료 되었습니다')
+          setChatStartTime(new Date().toISOString().slice(0, 19).replace("T", " "))
 
-          await connectChat(`/topic/chat/${chatRoomDto.chatRoomId}`, memberId, (msg, senderId) => {
-             if (msg.toLowerCase() === 'q') {
+          await connectChat(`/topic/chat/${chatRoomDto.chatRoomId}`, memberId, (msg) => {
+             if (msg.chatMessage.toLowerCase() === 'q') {
                 setIsExit(true)
                 alert('대화가 종료 되었습니다')
              } else {
                 setMessageList((prev) => [
                   ...prev,
-                  {senderId : senderId, sender: 'other', text: msg }
+                  {senderId : msg.memberId, sender: 'other', text: msg.chatMessage },
                 ]);
               }
             });
@@ -114,7 +116,7 @@ const ChatRoomPage = () => {
 
      {isMatching && (
         <ChatStartMessageBox
-            startDate={new Date().toISOString().slice(0, 19).replace("T"," ")}
+            startDate={chatStartTime}
         />
     )}
 

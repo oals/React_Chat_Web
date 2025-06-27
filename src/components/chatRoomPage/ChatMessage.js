@@ -8,7 +8,25 @@ const ChatMessage = ({ messages }) => {
   return (
     <div>
       {safeMessages.map((msg, index) => {
-        if (msg.sender === 'me') {
+
+      if (msg.isJoinNotice === true){
+         return (
+            <div key={index} className="d-flex justify-content-center my-1">
+             <div className="bg-light text-secondary px-3 py-1 rounded-pill small">
+                익명{msg.senderId}님이 입장하셨습니다.
+             </div>
+           </div>
+       );
+
+      } else if (msg.isExitNotice === true) {
+         return (
+            <div key={index} className="d-flex justify-content-center my-1">
+                        <div className="bg-light text-secondary px-3 py-1 rounded-pill small">
+                           익명{msg.senderId}님이 퇴장하셨습니다.
+                        </div>
+                      </div>
+         );
+      } else if (msg.sender === 'me') {
           return (
             <div key={index} className="d-flex justify-content-end mb-2">
               <div className="bg-info text-white p-2 rounded-pill">
@@ -16,7 +34,7 @@ const ChatMessage = ({ messages }) => {
               </div>
             </div>
           );
-        } else {
+      } else {
           return (
           <div key={index} className="d-flex flex-column align-items-start mb-2">
             <div className="bg-white text-secondary px-2 py-1 rounded small">

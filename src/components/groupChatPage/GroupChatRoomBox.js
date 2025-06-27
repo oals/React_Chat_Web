@@ -3,9 +3,9 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import ChatMessage from '../chatRoomPage/ChatMessage';
 import ChatStartMessageBox from '../chatRoomPage/ChatStartMessageBox';
-import { connectChat, connectMatching, disconnectChat, disconnectMatching } from '../../stomp/stompManager';
+import { connectChat, disconnectChat } from '../../stomp/stompManager';
 import { useMember } from '../../contexts/MemberContext';
-import { groupChatSend} from '../../utils/api';
+import { groupChatSend, groupChatRoomExit} from '../../utils/api';
 
 const GroupChatRoomBox = ({ groupChatRoom, isShowGroupChatBoxOpenCallBack }) => {
 
@@ -14,17 +14,36 @@ const GroupChatRoomBox = ({ groupChatRoom, isShowGroupChatBoxOpenCallBack }) => 
  const [message, setMessage] = useState('');
  const [messageList, setMessageList] = useState([]);
 
+  useEffect(() => {
+    const cleanup = () => {
+
+      disconnectChat();
+    };
+    window.addEventListener('beforeunload', cleanup);
+    return () => {
+      cleanup();
+      window.removeEventListener('beforeunload', cleanup);
+    };
+  }, []);
+
+
  useEffect(() => {
      let isSubscribed = true; // cleanup용 플래그
 
      const start = async () => {
        try {
-         await connectChat(`/topic/groupChat/${groupChatRoom.groupChatRoomId}`, memberId, (msg,senderId) => {
+         await connectChat(`/topic/groupChat/${groupChatRoom.groupChatRoomId}`, memberId, (msg) => {
            if (!isSubscribed) return;
+
+           if (msg.joinNotice) {
+            groupChatRoom.currentParticipants++
+           } else if (msg.exitNotice) {
+            groupChatRoom.currentParticipants--
+           }
 
            setMessageList((prev) => [
                 ...prev,
-                {senderId : senderId, sender: 'other', text: msg },
+                {senderId : msg.memberId, sender: 'other', text: msg.chatMessage, isJoinNotice: msg.joinNotice, isExitNotice : msg.exitNotice},
            ]);
          });
 
@@ -37,7 +56,6 @@ const GroupChatRoomBox = ({ groupChatRoom, isShowGroupChatBoxOpenCallBack }) => 
 
      return () => {
        isSubscribed = false;
-       // connectChat이 웹소켓이라면 disconnect 로직도 여기에 추가!
      };
 
  }, [groupChatRoom, memberId]);
@@ -84,10 +102,13 @@ const GroupChatRoomBox = ({ groupChatRoom, isShowGroupChatBoxOpenCallBack }) => 
    <div className="d-flex justify-content-end align-items-center gap-2">
     <div className="d-flex justify-content-end align-items-center gap-3">
       <div className="text-muted text-end" style={{ whiteSpace: 'nowrap', fontSize: '0.85rem' }}>
-        👥 {groupChatRoom.currentParticipants} / {groupChatRoom.groupChatRoomMaxParticipants}
+        👥 {groupChatRoom.currentParticipants + 1}명
       </div>
       <button className="btn btn-sm btn-outline-danger" title="나가기"
-       onClick={() => isShowGroupChatBoxOpenCallBack()}
+       onClick={() => {
+            groupChatRoomExit(groupChatRoom.groupChatRoomId)
+            isShowGroupChatBoxOpenCallBack()
+       }}
       >
         <i className="bi bi-box-arrow-right"></i>
       </button>
@@ -141,11 +162,6 @@ const GroupChatRoomBox = ({ groupChatRoom, isShowGroupChatBoxOpenCallBack }) => 
           </button>
 
          </div>
-
-
-
-
-
 </div>
   );
 };

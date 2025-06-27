@@ -22,8 +22,8 @@ export const connectMatching = (userId, onMatchReceived) => {
         webSocketFactory: () => socket,
         reconnectDelay: 5000,
         onConnect: () => {
-
            if (!matchingSubscribed) {
+           console.log('🔌 매칭 stomp 연결됨');
              matchingClient.subscribe(`/topic/match/${userId}`, (msg) => {
                const data = JSON.parse(msg.body);
                onMatchReceived(data);
@@ -54,10 +54,11 @@ export const connectChat = (topic, memberId, onMatchReceived) => {
         reconnectDelay: 5000,
         onConnect: () => {
            if (!chatSubscribed) {
+            console.log('🔌 채팅 stomp 연결됨');
              chatClient.subscribe(topic, (msg) => {
                const parsed = JSON.parse(msg.body);
                if (String(parsed.memberId) !== String(memberId)) {
-                 onMatchReceived(parsed.chatMessage,parsed.memberId);
+                 onMatchReceived(parsed);
                }
              });
              chatSubscribed = true;

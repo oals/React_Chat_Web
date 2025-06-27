@@ -43,97 +43,130 @@ const ChatArchivePage = () => {
    return (
       <div className="d-flex flex-column justify-content-start align-items-center min-vh-100 pt-5 bg-light">
 
-      {isChatArchiveOpen && (
-        <ChatArchiveBox
+    {isChatArchiveOpen && (
+      <>
+        <div
+          className="position-fixed top-0 start-0 w-100 h-100 bg-dark"
+          style={{ opacity: 0.5, zIndex: 1060 }}
+        ></div>
+
+        <div style={{ zIndex: 1061 }} className="position-fixed top-50 start-50 translate-middle">
+          <ChatArchiveBox
             chatArchiveId={chatArchiveId}
             chatArchiveOpenCallBack={() => setIsChatArchiveOpen(false)}
-        />
-      )}
+          />
+        </div>
+      </>
+    )}
 
-      <div className="w-75">
-      <div className="w-25 align-self-start mb-2">
-         <div className="d-flex gap-2">
-           <button
-             className={`btn ${!chatArchivesOption ? 'btn-primary active' : 'btn-outline-primary'}`}
-             onClick={() => setChatArchivesOption(false)}
-           >
-             전체
-           </button>
+      <div className="w-50">
 
-           <button
-             className={`btn ${chatArchivesOption ? 'btn-primary active' : 'btn-outline-primary'}`}
-             onClick={() => setChatArchivesOption(true)}
-           >
-             즐겨찾기
-           </button>
-         </div>
+      <div className="w-25 mb-3">
+      <div className="">
+      <div className="d-flex gap-2">
+                 <button
+                   className={`btn ${!chatArchivesOption ? 'btn-primary active' : 'btn-outline-primary'}`}
+                   onClick={() => setChatArchivesOption(false)}
+                 >
+                   전체
+                 </button>
 
-      </div>
-        <table className="table table-bordered table-hover bg-white shadow">
-          <thead >
-            <tr>
-              <th scope="col" className="text-center">#</th>
-              <th scope="col">제목</th>
-              <th scope="col">저장일시</th>
-              <th scope="col" className="text-center">즐겨찾기</th>
-              <th scope="col" className="text-center">삭제</th>
-            </tr>
-          </thead>
-          <tbody>
-           {chatArchives.map((chatArchive, index) => (
-             <tr
-               key={chatArchive.chatArchiveId}
-             >
-               <th scope="row" className="text-center">{totalCount - ((currentPage - 1) * 10) - index} </th>
-               <td
-
-                 className=" fw-semibold"
-                 style={{ cursor: 'pointer' }}
-                onClick={() => {
-                    setChatArchiveId(chatArchive.chatArchiveId)
-                    setIsChatArchiveOpen(true)
-                }}
-
-
-                >{chatArchive.chatArchiveTitle}</td>
-               <td>{chatArchive.chatArchiveDate.replace("T"," ")}</td>
-               <td className="text-center">
-                 <i
-                   className={chatArchive.chatArchiveBookmarks ? "bi bi-star-fill" : "bi bi-star"}
-                   style={{ color: chatArchive.chatArchiveBookmarks ? 'gold' : 'inherit', fontSize: '1.5rem' }}
-                   onClick={(e) => {
-                     setChatArchiveBookmarks(chatArchive.chatArchiveId)
-                     handleToggleBookmark(chatArchive.chatArchiveId);
-                     if (!chatArchive.chatArchiveBookmarks) {
-                        alert('즐겨찾기가 완료되었습니다')
-                     }
-                   }}
-                 ></i>
-               </td>
-                 <td className="text-center">
-                    <i
-                       onClick={(e) => {
-                         delChatArchive(chatArchive.chatArchiveId)
-                          fetchChatArchive(currentPage)
-                         alert('삭제되었습니다')
-                       }}
-                       class="bi bi-trash"
-                       style={{ fontSize: '1.5rem' }}
-                    ></i>
-                 </td>
-             </tr>
-           ))}
-          </tbody>
-        </table>
+                 <button
+                   className={`btn ${chatArchivesOption ? 'btn-primary active' : 'btn-outline-primary'}`}
+                   onClick={() => setChatArchivesOption(true)}
+                 >
+                   즐겨찾기
+                 </button>
+               </div>
       </div>
 
-     <Pagination
-       totalPages={Math.ceil(totalCount / 10)}
-       onPageChange={(page) => {
-       setCurrentPage(page)
-         fetchChatArchive(page)
-       }}
-     />
+
+
+      </div>
+
+        <div className="container p-0">
+          <div className="row">
+
+            {chatArchives.length === 0 ? (
+                              <tr>
+                                <td colSpan="6" className="text-center">
+                                  {chatArchivesOption ? '즐겨찾기한 아카이브가 존재하지 않습니다.' : '저장된 아카이브가 존재하지 않습니다.' }
+                                </td>
+                              </tr>
+                            ) : (
+                             chatArchives.map((chatArchive, index) => (
+                                          <div className="col-md-3 d-flex justify-content-center mb-4" key={chatArchive.chatArchiveId}>
+                                            <div className="card shadow-sm" style={{ width: "100%", maxWidth: "35rem" }}>
+                                              <div className="card-body">
+                                            <div className="d-flex align-items-center gap-1">
+                                              <i
+                                                className={chatArchive.chatArchiveBookmarks ? "bi bi-star-fill" : "bi bi-star"}
+                                                style={{
+                                                  color: chatArchive.chatArchiveBookmarks ? "gold" : "inherit",
+                                                  fontSize: "1.5rem",
+                                                  cursor: "pointer",
+                                                }}
+                                                onClick={() => {
+                                                  setChatArchiveBookmarks(chatArchive.chatArchiveId);
+                                                  handleToggleBookmark(chatArchive.chatArchiveId);
+                                                  if (!chatArchive.chatArchiveBookmarks) {
+                                                    alert("즐겨찾기가 완료되었습니다");
+                                                  }
+                                                }}
+                                              ></i>
+
+                                              <h6
+                                                className="card-title mb-0 text-primary fw-semibold"
+                                                style={{ cursor: 'pointer' }}
+                                                onClick={() => {
+                                                  setChatArchiveId(chatArchive.chatArchiveId);
+                                                  setIsChatArchiveOpen(true);
+                                                }}
+                                              >
+                                                {chatArchive.chatArchiveTitle}
+                                              </h6>
+                                            </div>
+
+
+                                            <p className="card-text text-secondary mb-2">
+                                              {chatArchive.chatArchiveDate.replace("T", " ")}
+                                            </p>
+
+                                           <div className="d-flex justify-content-start">
+
+                                             <button
+                                               className="btn btn-danger btn-sm d-flex align-items-center gap-2"
+                                               onClick={() => {
+                                                 delChatArchive(chatArchive.chatArchiveId);
+                                                 fetchChatArchive(currentPage);
+                                                 alert("삭제되었습니다");
+                                               }}
+                                             >
+                                               <i className="bi bi-trash"></i>
+                                             </button>
+                                           </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    ))
+                            )}
+
+
+
+      </div>
+    </div>
+
+      </div>
+ {totalCount !== 0 && (
+  <Pagination
+        totalPages={Math.ceil(totalCount / 10)}
+        onPageChange={(page) => {
+        setCurrentPage(page)
+          fetchChatArchive(page)
+        }}
+      />
+ )}
+
 
      </div>
    );

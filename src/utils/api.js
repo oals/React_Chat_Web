@@ -81,7 +81,7 @@ export function setChatArchiveBookmarks(chatArchiveId) {
 
 export function delChatArchive(chatArchiveId) {
   return apiClient(`${BASE_API_URL}/api/chat/delChatArchive`, {
-    method: 'POST',
+    method: 'DELETE',
     credentials: 'include',
     body: {
              'chatArchiveId' : chatArchiveId,
@@ -96,20 +96,19 @@ export function getChatArchiveMessage(chatArchiveId) {
     })
 }
 
-export function groupChatCreate(groupChatRoomTitle, groupChatRoomMaxParticipants, groupChatRoomTopic) {
+export function groupChatCreate(groupChatRoomTitle, groupChatRoomTopic) {
   return apiClient(`${BASE_API_URL}/api/groupChat/create`, {
     method: 'POST',
     credentials: 'include',
      body: {
              'groupChatRoomTitle' : groupChatRoomTitle,
-             'groupChatRoomMaxParticipants' : groupChatRoomMaxParticipants,
              'groupChatRoomTopic' : groupChatRoomTopic,
      }
     })
 }
 
-export function getGroupChatRoom(page, groupChatRoomTopic) {
-  return apiClient(`${BASE_API_URL}/api/groupChat/getGroupChatRoomList?groupChatRoomTopic=${groupChatRoomTopic}`, {
+export function getGroupChatRoom(page, groupChatRoomTopic, searchText = '') {
+  return apiClient(`${BASE_API_URL}/api/groupChat/getGroupChatRoomList?page=${page}&groupChatRoomTopic=${groupChatRoomTopic}&searchText=${searchText}`, {
     method: 'GET',
     credentials: 'include',
     })
@@ -136,3 +135,22 @@ export function groupChatSend(groupChatRoomId, chatMessage) {
   });
 }
 
+export function groupChatJoinMessage(groupChatRoomId) {
+  return apiClient(`${BASE_API_URL}/api/groupChat/joinMessage`, {
+    method: 'POST',
+    credentials: 'include',
+    body: {
+        'groupChatRoomId' : groupChatRoomId
+    }
+  });
+}
+
+export function groupChatRoomExit(groupChatRoomId) {
+  return apiClient(`${BASE_API_URL}/api/groupChat/exit`, {
+    method: 'DELETE',
+    credentials: 'include',
+    body: {
+        'groupChatRoomId' : groupChatRoomId,
+    }
+   })
+}

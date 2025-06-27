@@ -1,13 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { FaReact } from 'react-icons/fa';
 import LoginButton from '../components/login/LoginButton';
+import { getAuth, onAuthStateChanged  } from 'firebase/auth';
 import { useMember } from '../contexts/MemberContext';
 
 
 const NavigationBar = () => {
 
  const { memberId } = useMember();
+ const [isLogin, setIsLogin] = useState(false)
+ const auth = getAuth();
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      setIsLogin(true)
+    }
+  });
 
   return (
     <nav
@@ -32,7 +42,7 @@ const NavigationBar = () => {
             <Link to="/" style={{ marginRight: '1rem' }} className="fw-semibold link-offset-2 link-underline link-underline-opacity-0">
               home
             </Link>
-        {memberId != null && (
+        {(memberId && isLogin) && (
             <>
                 <Link to="/chat" style={{ marginRight: '1rem' }} className="fw-semibold link-offset-2 link-underline link-underline-opacity-0">
                   Chat
