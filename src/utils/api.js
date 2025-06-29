@@ -154,3 +154,10 @@ export function groupChatRoomExit(groupChatRoomId) {
     }
    })
 }
+
+export function getGroupChatRoomMemberCount(groupChatRoomId) {
+  return apiClient(`${BASE_API_URL}/api/groupChat/memberCount?groupChatRoomId=${groupChatRoomId}`, {
+    method: 'GET',
+    credentials: 'include',
+   })
+}

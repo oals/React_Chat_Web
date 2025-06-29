@@ -13,8 +13,6 @@ const ChatStartMessageBox = ({startDate}) => {
           <div className="text-center border border-info mt-3">
             <span>Tip. "q"를 입력하면 채팅을 종료할 수 있습니다. </span>
           </div>
-
-
       </div>
   );
 };

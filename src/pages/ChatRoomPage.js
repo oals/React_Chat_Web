@@ -69,7 +69,7 @@ const ChatRoomPage = () => {
         }
     if (!isMatching) start();
 
-  }, [memberId, isMatching]);
+  }, [memberId, isMatching, alert]);
 
   useEffect(() => {
    if (scrollRef.current) {
@@ -80,7 +80,6 @@ const ChatRoomPage = () => {
   useEffect(() => {
     isMatchingRef.current = isMatching;
   }, [isMatching]);
-
 
   const handleChange = (e) => {
     setMessage(e.target.value);
@@ -106,107 +105,89 @@ const ChatRoomPage = () => {
   };
 
   return (
-
     <div className="min-vh-100 d-flex justify-content-center align-items-center">
+      <div className="bg-light text-dark border border-3 rounded  w-75 d-flex flex-column justify-content-between" style={{ maxWidth: '1000px', height: '700px' }}>
 
-     <div
-       className="bg-light text-dark border border-3 rounded  w-75 d-flex flex-column justify-content-between"
-       style={{ maxWidth: '1000px', height: '700px' }}
-     >
-
-     {isMatching && (
-        <ChatStartMessageBox
+        {isMatching && (
+          <ChatStartMessageBox
             startDate={chatStartTime}
-        />
-    )}
+          />
+        )}
 
-      {!isMatching && (
-        <MatchingWaitBox
-             isMatching={isMatching}
-        />
-      )}
+        {!isMatching && (
+          <MatchingWaitBox
+            isMatching={isMatching}
+          />
+        )}
 
-      <div
-        ref={scrollRef}
-        className="bg-white p-3"
-        style={{ height: '620px', overflowY: 'auto' }}
-      >
+        <div ref={scrollRef} className="bg-white p-3" style={{ height: '620px', overflowY: 'auto' }}>
 
-       <ChatMessage messages={messageList} />
+          <ChatMessage messages={messageList} />
 
-      </div>
+        </div>
 
-    {isShowChatSavePopup && (
-      <ChatArchiveSaveBox
-        showChatSavePopupOpenCallBack={() => setIsShowChatSavePopup(false)}
-        chatSaveCallBack={(chatArchiveTitle) => {
-          if (!isChatArchiveSave) {
-            chatSave(chatArchiveTitle,JSON.stringify(messageList))
-            setIsChatArchiveSave(true)
-            setIsShowChatSavePopup(false)
-            alert('저장 되었습니다')
-          } else {
-            alert('이미 저장된 대화 입니다')
-          }
+        {isShowChatSavePopup && (
+          <ChatArchiveSaveBox
+            showChatSavePopupOpenCallBack={() => setIsShowChatSavePopup(false)}
+            chatSaveCallBack={(chatArchiveTitle) => {
+              if (!isChatArchiveSave) {
+                chatSave(chatArchiveTitle, JSON.stringify(messageList))
+                setIsChatArchiveSave(true)
+                setIsShowChatSavePopup(false)
+                alert('저장 되었습니다')
+              } else {
+                alert('이미 저장된 대화 입니다')
+              }
 
-        }}
-      />
-    )}
+            }}
+          />
+        )}
 
-     {isExit && (
-         <ChatExitMessageBox
-           isReMatching={() => {
+        {isExit && (
+          <ChatExitMessageBox
+            isReMatching={() => {
               setMessageList([])
               disconnectChat();
               setIsExit(false)
               setIsMatching(false)
               setIsChatArchiveSave(false)
-           }}
-           setIsShowChatSavePopupOpenCallBack={() => setIsShowChatSavePopup(true)}
-         />
-     )}
-
-
-    {(isMatching) && (
-        <div className="d-flex align-items-center gap-1">
-           <input
-             type="text"
-             className="form-control flex-grow-1 rounded-3 shadow-sm border focus-ring focus-ring-primary"
-             placeholder="대화를 시작해보세요."
-             value={message}
-             onChange={handleChange}
-              style={{
-                 fontSize: '15px',
-                 backgroundColor: '#f9f9f9',
-                 transition: 'all 0.2s ease-in-out',
-               }}
-             onKeyDown={(e) => {
-                 if (e.key === 'Enter') {
-                   handleSend();
-                 }
-               }}
-             disabled={!isMatching || isExit}
-           />
-          <button
-              onClick={handleSend}
-            className="btn btn-info text-light"
-            style={{ minWidth: '80px' }}
-            disabled={isExit}
-          >
-          전송
-          </button>
-
-         </div>
-
+            }}
+            setIsShowChatSavePopupOpenCallBack={() => setIsShowChatSavePopup(true)}
+          />
         )}
 
-       <div>
-
-
-       </div>
-     </div>
+        {(isMatching) && (
+          <div className="d-flex align-items-center gap-1">
+            <input
+              type="text"
+              className="form-control flex-grow-1 rounded-3 shadow-sm border focus-ring focus-ring-primary"
+              placeholder="대화를 시작해보세요."
+              value={message}
+              onChange={handleChange}
+              style={{
+                fontSize: '15px',
+                backgroundColor: '#f9f9f9',
+                transition: 'all 0.2s ease-in-out',
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  handleSend();
+                }
+              }}
+              disabled={!isMatching || isExit}
+            />
+            <button
+              onClick={handleSend}
+              className="btn btn-info text-light"
+              style={{ minWidth: '80px' }}
+              disabled={isExit}
+            >
+              전송
+            </button>
+          </div>
+        )}
+      </div>
     </div>
-
   );
 };
 

@@ -4,7 +4,8 @@ import { useState, useEffect } from 'react';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
 
 const PrivateRoute = ({ children }) => {
- const { memberId, isLoading } = useMember();
+
+  const { memberId, isLoading } = useMember();
   const [isLogin, setIsLogin] = useState(null);
 
   useEffect(() => {

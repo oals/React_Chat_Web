@@ -72,7 +72,7 @@ const LoginButton = () => {
         </>
       ) : (
         <>
-          <button className="btn btn-outline-primary btn-sm" onClick={handleLogin}>
+          <button className="btn btn-outline-info custom-hover-white btn-sm" onClick={handleLogin}>
             Google 로그인
           </button>
         </>

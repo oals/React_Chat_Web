@@ -1,11 +1,8 @@
-import { useState } from 'react';
 
-const Pagination = ({ totalPages, onPageChange }) => {
-  const [currentPage, setCurrentPage] = useState(1);
 
+const Pagination = ({currentPage, totalPages, onPageChange }) => {
   const goToPage = (page) => {
     if (page < 1 || page > totalPages) return;
-    setCurrentPage(page);
     onPageChange(page);
   };
 
@@ -14,7 +11,7 @@ const Pagination = ({ totalPages, onPageChange }) => {
       <ul className="pagination">
         <li className="page-item">
           <button
-            className="page-link"
+            className="page-link bg-info text-white"
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -28,7 +25,7 @@ const Pagination = ({ totalPages, onPageChange }) => {
             className={`page-item ${currentPage === idx + 1 ? 'active' : ''}`}
           >
             <button
-              className="page-link"
+              className="page-link bg-info text-white"
               onClick={() => goToPage(idx + 1)}
             >
               {idx + 1}
@@ -38,7 +35,7 @@ const Pagination = ({ totalPages, onPageChange }) => {
 
         <li className="page-item">
           <button
-            className="page-link"
+            className="page-link bg-info text-white"
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage === totalPages}
           >
