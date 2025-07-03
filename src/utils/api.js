@@ -29,7 +29,7 @@ export function chatSend(chatRoomId, chatMessage) {
 }
 
 export function fireBaseAuthing(idToken) {
-  return apiClient(`${BASE_API_URL}/auth/fireBase`, {
+  return apiClient(`${BASE_API_URL}auth/fireBase`, {
     method: 'POST',
     credentials: 'include',
     headers:{
@@ -38,21 +38,21 @@ export function fireBaseAuthing(idToken) {
 }
 
 export function clearCookie() {
-  return apiClient(`${BASE_API_URL}/cookie/clear`, {
+  return apiClient(`${BASE_API_URL}cookie/clear`, {
     method: 'DELETE',
     credentials: 'include'
     })
 }
 
 export function getMemberId() {
-  return apiClient(`${BASE_API_URL}/cookie/getMemberId`, {
+  return apiClient(`${BASE_API_URL}cookie/getMemberId`, {
     method: 'GET',
     credentials: 'include'
     })
 }
 
 export function chatSave(chatArchiveTitle, chatArchiveJson) {
-  return apiClient(`${BASE_API_URL}/chat/save`, {
+  return apiClient(`${BASE_API_URL}chat/save`, {
     method: 'POST',
     credentials: 'include',
      body: {
@@ -63,14 +63,14 @@ export function chatSave(chatArchiveTitle, chatArchiveJson) {
 }
 
 export function getChatArchive(isBookmarks,page) {
-  return apiClient(`${BASE_API_URL}/chat/getChatArchive?chatArchiveBookmarks=${isBookmarks}&page=${page}`, {
+  return apiClient(`${BASE_API_URL}chat/getChatArchive?chatArchiveBookmarks=${isBookmarks}&page=${page}`, {
     method: 'GET',
     credentials: 'include',
     })
 }
 
 export function setChatArchiveBookmarks(chatArchiveId) {
-  return apiClient(`${BASE_API_URL}/chat/setChatArchiveBookmarks`, {
+  return apiClient(`${BASE_API_URL}chat/setChatArchiveBookmarks`, {
     method: 'POST',
     credentials: 'include',
     body: {
@@ -80,7 +80,7 @@ export function setChatArchiveBookmarks(chatArchiveId) {
 }
 
 export function delChatArchive(chatArchiveId) {
-  return apiClient(`${BASE_API_URL}/chat/delChatArchive`, {
+  return apiClient(`${BASE_API_URL}chat/delChatArchive`, {
     method: 'DELETE',
     credentials: 'include',
     body: {
@@ -90,14 +90,14 @@ export function delChatArchive(chatArchiveId) {
 }
 
 export function getChatArchiveMessage(chatArchiveId) {
-  return apiClient(`${BASE_API_URL}/chat/getChatArchiveMessage?chatArchiveId=${chatArchiveId}`, {
+  return apiClient(`${BASE_API_URL}chat/getChatArchiveMessage?chatArchiveId=${chatArchiveId}`, {
     method: 'GET',
     credentials: 'include',
     })
 }
 
 export function groupChatCreate(groupChatRoomTitle, groupChatRoomTopic) {
-  return apiClient(`${BASE_API_URL}/groupChat/create`, {
+  return apiClient(`${BASE_API_URL}groupChat/create`, {
     method: 'POST',
     credentials: 'include',
      body: {
@@ -108,14 +108,14 @@ export function groupChatCreate(groupChatRoomTitle, groupChatRoomTopic) {
 }
 
 export function getGroupChatRoom(page, groupChatRoomTopic, searchText = '') {
-  return apiClient(`${BASE_API_URL}/groupChat/getGroupChatRoomList?page=${page}&groupChatRoomTopic=${groupChatRoomTopic}&searchText=${searchText}`, {
+  return apiClient(`${BASE_API_URL}groupChat/getGroupChatRoomList?page=${page}&groupChatRoomTopic=${groupChatRoomTopic}&searchText=${searchText}`, {
     method: 'GET',
     credentials: 'include',
     })
 }
 
 export function joinGroupChatRoom(groupChatRoomId) {
-  return apiClient(`${BASE_API_URL}/groupChat/join`, {
+  return apiClient(`${BASE_API_URL}groupChat/join`, {
     method: 'POST',
     credentials: 'include',
     body: {
@@ -125,7 +125,7 @@ export function joinGroupChatRoom(groupChatRoomId) {
 }
 
 export function groupChatSend(groupChatRoomId, chatMessage) {
-  return apiClient(`${BASE_API_URL}/groupChat/send`, {
+  return apiClient(`${BASE_API_URL}groupChat/send`, {
     method: 'POST',
     credentials: 'include',
     body: {
@@ -136,7 +136,7 @@ export function groupChatSend(groupChatRoomId, chatMessage) {
 }
 
 export function groupChatJoinMessage(groupChatRoomId) {
-  return apiClient(`${BASE_API_URL}/groupChat/joinMessage`, {
+  return apiClient(`${BASE_API_URL}groupChat/joinMessage`, {
     method: 'POST',
     credentials: 'include',
     body: {
@@ -146,7 +146,7 @@ export function groupChatJoinMessage(groupChatRoomId) {
 }
 
 export function groupChatRoomExit(groupChatRoomId) {
-  return apiClient(`${BASE_API_URL}/groupChat/exit`, {
+  return apiClient(`${BASE_API_URL}groupChat/exit`, {
     method: 'DELETE',
     credentials: 'include',
     body: {
@@ -156,7 +156,7 @@ export function groupChatRoomExit(groupChatRoomId) {
 }
 
 export function getGroupChatRoomMemberCount(groupChatRoomId) {
-  return apiClient(`${BASE_API_URL}/groupChat/memberCount?groupChatRoomId=${groupChatRoomId}`, {
+  return apiClient(`${BASE_API_URL}groupChat/memberCount?groupChatRoomId=${groupChatRoomId}`, {
     method: 'GET',
     credentials: 'include',
    })
