@@ -15,8 +15,8 @@ const GroupChatPage = () => {
   const [groupChatRooms, setGroupChatRooms] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [groupChatRoomTopic, setGroupChatRoomTopic] = useState('자유');
-  const groupChatRoomTopics = ['자유', '취미', '자기개발', '운동', '취업'];
+  const [groupChatRoomTopic, setGroupChatRoomTopic] = useState('전체');
+  const groupChatRoomTopics = ['전체', '자유', '취미', '자기개발', '운동', '취업'];
   const groupChatRoomTopicRef = useRef(groupChatRoomTopic);
   const [searchText, setSearchText] = useState('');
 
