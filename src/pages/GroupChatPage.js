@@ -15,8 +15,8 @@ const GroupChatPage = () => {
   const [groupChatRooms, setGroupChatRooms] = useState([]);
   const [totalCount, setTotalCount] = useState(0);
   const [currentPage, setCurrentPage] = useState(1);
-  const [groupChatRoomTopic, setGroupChatRoomTopic] = useState('전체');
-  const groupChatRoomTopics = ['전체', '자유', '취미', '운동', '취업'];
+  const [groupChatRoomTopic, setGroupChatRoomTopic] = useState('자유');
+  const groupChatRoomTopics = ['자유', '취미', '자기개발', '운동', '취업'];
   const groupChatRoomTopicRef = useRef(groupChatRoomTopic);
   const [searchText, setSearchText] = useState('');
 
@@ -51,8 +51,8 @@ return (
 
           <div style={{ zIndex: 1061 }} className="position-fixed top-50 start-50 translate-middle">
             <GroupChatCreateBox
-              groupChatRoomCreateCompleteCallBack={() => {
-                fetchGroupChatRoom(1)
+              groupChatRoomCreateCompleteCallBack={ async () => {
+                await fetchGroupChatRoom(1)
                 setCurrentPage(1)
                 setIsGroupChatCreateBoxOpen(false)
               }
@@ -89,8 +89,7 @@ return (
                 {groupChatRoomTopics.map((topic) => (
                   <button
                     key={topic}
-                    className={`btn white-nowrap px-3 ${groupChatRoomTopic === topic ? 'btn-info text-white' : 'btn-outline-info custom-hover-white'
-                      }`}
+                    className={`btn white-nowrap px-3 ${groupChatRoomTopic === topic ? 'btn-info text-white' : 'btn-outline-info custom-hover-white'}`}
                     style={{ whiteSpace: 'nowrap' }}
                     onClick={() => {
                       setCurrentPage(1)
@@ -181,10 +180,10 @@ return (
                   <td
                     style={{ cursor: 'pointer' }}
                     className="fw-semibold text-info"
-                    onClick={() => {
+                    onClick={ async () => {
                       setGroupChatRoom(room);
-                      joinGroupChatRoom(room.groupChatRoomId);
-                      groupChatJoinMessage(room.groupChatRoomId);
+                      await joinGroupChatRoom(room.groupChatRoomId);
+                      await groupChatJoinMessage(room.groupChatRoomId);
                       setIsGroupChatBoxOpen(true);
                     }}
                   >
@@ -202,10 +201,10 @@ return (
                   <td className="text-center">
                     <button
                       className="btn btn-outline-info btn-sm px-4 rounded-pill custom-hover-white"
-                      onClick={() => {
+                      onClick={ async () => {
                         setGroupChatRoom(room);
-                        joinGroupChatRoom(room.groupChatRoomId);
-                        groupChatJoinMessage(room.groupChatRoomId);
+                        await joinGroupChatRoom(room.groupChatRoomId);
+                        await groupChatJoinMessage(room.groupChatRoomId);
                         setIsGroupChatBoxOpen(true);
                       }}
                     >

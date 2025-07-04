@@ -44,11 +44,11 @@ const GroupChatCreateBox = ({ isShowGroupChatCreateBoxOpenCallBack, groupChatRoo
             onChange={(e) => setGroupChatRoomTopic(e.target.value)}
             style={{ backgroundColor: '#f9f9ff' }}
           >
-            <option value="자유">주제를 선택하세요</option>
             <option value="자유">자유</option>
             <option value="취미">취미</option>
             <option value="자기개발">자기개발</option>
             <option value="운동">운동</option>
+            <option value="취업">취업</option>
           </select>
         </div>
       </div>
@@ -56,9 +56,9 @@ const GroupChatCreateBox = ({ isShowGroupChatCreateBoxOpenCallBack, groupChatRoo
       <div>
         <div className="text-center ">
           <button className="btn btn-outline-info custom-hover-white w-100"
-            onClick={() => {
-              groupChatCreate(groupChatRoomTitleTitle, groupChatRoomTopic)
-              groupChatRoomCreateCompleteCallBack()
+            onClick={ async () => {
+              await groupChatCreate(groupChatRoomTitleTitle, groupChatRoomTopic)
+              await groupChatRoomCreateCompleteCallBack()
             }}
           >채팅방 생성</button>
         </div>
