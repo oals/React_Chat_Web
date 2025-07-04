@@ -7,7 +7,7 @@ const GroupChatCreateBox = ({ isShowGroupChatCreateBoxOpenCallBack, groupChatRoo
 
 
   const [groupChatRoomTitleTitle, setGroupChatRoomTitleTitle] = useState("");
-  const [groupChatRoomTopic, setGroupChatRoomTopic] = useState("");
+  const [groupChatRoomTopic, setGroupChatRoomTopic] = useState("자유");
 
   return (
     <div
