@@ -135,9 +135,9 @@ const ChatArchivePage = () => {
 
                         <button
                           className="btn btn-danger btn-sm d-flex align-items-center gap-2"
-                          onClick={() => {
-                            delChatArchive(chatArchive.chatArchiveId);
-                            fetchChatArchive(currentPage);
+                          onClick={async () => {
+                            await delChatArchive(chatArchive.chatArchiveId);
+                            await fetchChatArchive(currentPage);
                             alert("삭제되었습니다");
                           }}
                         >

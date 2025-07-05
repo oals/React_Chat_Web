@@ -16,7 +16,7 @@ const GroupChatRoomBox = ({ groupChatRoom, isShowGroupChatBoxOpenCallBack, initG
 
   useEffect(() => {
     const cleanup = async () => {
-      await groupChatRoomExit(groupChatRoom.groupChatRoomId)
+      await groupChatRoomExit(groupChatRoom.groupChatRoomId,groupChatRoom.groupChatRoomTopic)
       initGroupChatRoomList()
       disconnectChat();
     };
@@ -31,7 +31,7 @@ const GroupChatRoomBox = ({ groupChatRoom, isShowGroupChatBoxOpenCallBack, initG
 
     const selectGroupChatRoomMemberCount = async () => {
       try {
-        const res = await getGroupChatRoomMemberCount(groupChatRoom.groupChatRoomId);
+        const res = await getGroupChatRoomMemberCount(groupChatRoom.groupChatRoomId, groupChatRoom.groupChatRoomTopic);
         const memberCount = await res.json();
         groupChatRoom.currentParticipants = memberCount;
         setMemberCount(memberCount)

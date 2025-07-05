@@ -114,12 +114,13 @@ export function getGroupChatRoom(page, groupChatRoomTopic, searchText = '') {
     })
 }
 
-export function joinGroupChatRoom(groupChatRoomId) {
+export function joinGroupChatRoom(groupChatRoomId,groupChatRoomTopic) {
   return apiClient(`${BASE_API_URL}groupChat/join`, {
     method: 'POST',
     credentials: 'include',
     body: {
-              'groupChatRoomId' : groupChatRoomId
+              'groupChatRoomId' : groupChatRoomId,
+              'groupChatRoomTopic': groupChatRoomTopic,
          }
     })
 }
@@ -145,18 +146,19 @@ export function groupChatJoinMessage(groupChatRoomId) {
   });
 }
 
-export function groupChatRoomExit(groupChatRoomId) {
+export function groupChatRoomExit(groupChatRoomId,groupChatRoomTopic) {
   return apiClient(`${BASE_API_URL}groupChat/exit`, {
     method: 'DELETE',
     credentials: 'include',
     body: {
         'groupChatRoomId' : groupChatRoomId,
+        'groupChatRoomTopic' : groupChatRoomTopic,
     }
    })
 }
 
-export function getGroupChatRoomMemberCount(groupChatRoomId) {
-  return apiClient(`${BASE_API_URL}groupChat/memberCount?groupChatRoomId=${groupChatRoomId}`, {
+export function getGroupChatRoomMemberCount(groupChatRoomId,groupChatRoomTopic) {
+  return apiClient(`${BASE_API_URL}groupChat/memberCount?groupChatRoomId=${groupChatRoomId}&groupChatRoomTopic=${groupChatRoomTopic}`, {
     method: 'GET',
     credentials: 'include',
    })

@@ -36,7 +36,6 @@ const MatchingWaitBox = ({isMatching}) => {
               className="btn btn-info text-light"
               onClick={async () => {
                 try {
-                  await matchCancel();
                   disconnectMatching();
                   navigate('/chat');
                 } catch (err) {

@@ -182,7 +182,7 @@ return (
                     className="fw-semibold text-info"
                     onClick={ async () => {
                       setGroupChatRoom(room);
-                      await joinGroupChatRoom(room.groupChatRoomId);
+                      await joinGroupChatRoom(room.groupChatRoomId, room.groupChatRoomTopic);
                       await groupChatJoinMessage(room.groupChatRoomId);
                       setIsGroupChatBoxOpen(true);
                     }}
@@ -203,7 +203,7 @@ return (
                       className="btn btn-outline-info btn-sm px-4 rounded-pill custom-hover-white"
                       onClick={ async () => {
                         setGroupChatRoom(room);
-                        await joinGroupChatRoom(room.groupChatRoomId);
+                        await joinGroupChatRoom(room.groupChatRoomId, room.groupChatRoomTopic);
                         await groupChatJoinMessage(room.groupChatRoomId);
                         setIsGroupChatBoxOpen(true);
                       }}
