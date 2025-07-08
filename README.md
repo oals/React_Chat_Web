@@ -432,7 +432,7 @@
 ![저장된쿠키](https://github.com/user-attachments/assets/bd8dda39-7dad-40a9-852e-3b7305488b5c)
 
 ### 1. Firebase 로그인 완료
-- 클라이언트에서 Firebase 로그인 후, 발급받은 토큰을 서버에 전달합니다.
+- 클라이언트에서 Firebase를 통해 Google 소셜 로그인 후, 발급받은 토큰을 서버에 전달합니다.
 
 ### 2. 멤버 식별자 조회 또는 생성
 - 서버는 Firebase 토큰을 검증한 뒤, **이메일을 기준으로 내부 DB에서 유저 정보를 조회**합니다.  
