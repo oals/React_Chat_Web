@@ -1,5 +1,5 @@
 # 💻 ChatX
-<img src="https://github.com/user-attachments/assets/48f4665b-2a0e-4bc7-a3b3-e3ce0f681b18" alt="appIcon" width="300"/>
+<img src="https://github.com/user-attachments/assets/822d2265-e335-436b-a6dc-8f8a985111a8" alt="appIcon" width="300"/>
 
 
 
@@ -407,14 +407,13 @@
 ---
 
 ### 홈
-| 홈 상단 | 홈 하단 |
-|---------|---------|
-| <img src="https://github.com/user-attachments/assets/afbe227e-ecd8-4dd5-9b82-6fcf8caed583" width="600"/> | <img src="https://github.com/user-attachments/assets/ef248654-089f-4224-bf23-8059c6b7b550" width="600"/> | 
-
+| 홈 |
+|---------|
+| <img src="https://github.com/user-attachments/assets/7e262c12-95c9-44ab-b0a4-ee6beab318a3" width="900"/> | 
 
 
 #### ✅ 홈 설명
-- 사이트 전반의 주요 기능을 안내하는 네비게이션 메뉴를 소개합니다.
+- 사이트 전반의 주요 기능을 안내하는 네비게이션 메뉴를 제공합니다.
 
 ---
 
@@ -466,9 +465,17 @@
 ### 랜덤 채팅
 <br>
 
-| 매칭 | 
+| 매칭 대기 | 
 |---------|
-| <img src="https://github.com/user-attachments/assets/f80ac43d-b264-4d11-801a-682f06885cdf" width="900"/> |
+| <img src="https://github.com/user-attachments/assets/eff21cbb-fd0a-415a-8f88-cbc41f6691d4" width="900"/> |
+
+
+<br>
+
+| 매칭 성공 | 
+|---------|
+| <img src="https://github.com/user-attachments/assets/84f91707-9112-4198-a7a4-3126126fd3b6" width="900"/> |
+
 
 
 #### ✅ 매칭 설명
@@ -479,7 +486,7 @@
 
 | 채팅 | 
 |---------|
-| <img src="https://github.com/user-attachments/assets/450223ed-0a8e-4839-b761-8dd22f923d88" width="900"/> |
+| <img src="https://github.com/user-attachments/assets/4ba68320-c378-4541-bb32-da45dcc1ee18" width="900"/> |
 
 
 #### ✅ 채팅 설명
@@ -491,7 +498,7 @@
 
 | 리매칭 | 
 |---------|
-| <img src="https://github.com/user-attachments/assets/7cbbea6f-0598-4501-99b7-f6f242abe6a1" width="900"/> |
+| <img src="https://github.com/user-attachments/assets/62b9fa87-0def-4d63-82bd-89799966e4da" width="900"/> |
 
 
 #### ✅ 리매칭 설명
@@ -502,7 +509,8 @@
 
 | 매칭 취소 | 
 |---------|
-| <img src="https://github.com/user-attachments/assets/b52368d9-09d8-4f5b-a6ab-7d0474cf28e5" width="900"/> |
+| <img src="https://github.com/user-attachments/assets/6fe2a294-d786-4147-8386-bde5e750c5a1" width="900"/> |
+
 
 
 #### ✅ 매칭 취소 설명
@@ -515,8 +523,7 @@
 
 | 목록 | 
 |---------|
-| <img src="https://github.com/user-attachments/assets/fbf94cc5-ee03-40f2-b646-a579041828a5" width="900"/> |
-
+| <img src="https://github.com/user-attachments/assets/ed91173a-bd32-4e32-92a0-f43226aca299" width="900"/> |
 
 #### ✅ 목록 설명
 - 카테고리별로 조회 가능하며, 채팅방 이름으로 검색할 수 있어 사용자가 원하는 채팅방을 손쉽게 찾을 수 있도록 구성
@@ -528,7 +535,7 @@
 
 | 생성 | 
 |---------|
-| <img src="https://github.com/user-attachments/assets/78c7770a-5a33-45d4-b5c3-aab6da0e5f27" width="900"/> |
+| <img src="https://github.com/user-attachments/assets/c7c79976-1f23-4995-bf9b-298a311bbaad" width="900"/> |
 
 
 #### ✅ 채팅방 생성 설명
@@ -539,7 +546,7 @@
 
 |  채팅 | 
 |---------|
-| <img src="https://github.com/user-attachments/assets/2a478034-b9b5-41d4-8095-9ba506951eb9" width="900"/> |
+| <img src="https://github.com/user-attachments/assets/5a617498-bcdd-41c4-a46d-d3c48bd291df" width="900"/> |
 
 
 #### ✅ 채팅 설명
@@ -555,7 +562,7 @@
 
 |  저장 | 
 |---------|
-| <img src="https://github.com/user-attachments/assets/60bf5009-a2e7-457c-b2fe-ee424e7b3506" width="900"/> |
+| <img src="https://github.com/user-attachments/assets/2eebf9bb-f51c-4b6a-9e3d-5ad3fcadba2d" width="900"/> |
 
 
 #### ✅ 저장 설명
@@ -568,7 +575,7 @@
 
 |  목록 | 
 |---------|
-| <img src="https://github.com/user-attachments/assets/c827d6de-1f1d-478a-b328-e9224ad8c674" width="900"/> |
+| <img src="https://github.com/user-attachments/assets/2585bd25-a48b-4651-9770-6c250f2c6846" width="900"/> |
 
 
 #### ✅ 목록 설명
