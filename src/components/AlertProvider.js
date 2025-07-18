@@ -19,7 +19,7 @@ export const AlertProvider = ({ children }) => {
   return (
     <AlertContext.Provider value={{ alert }}>
       {children}
-      <div className="position-fixed top-0 start-50 translate-middle-x p-3" style={{ zIndex: 1055 }}>
+      <div className="position-fixed top-0 start-50 translate-middle-x p-3" style={{ zIndex: 1075 }}>
         {alerts.map(({ id, message }) => (
           <FadeOutAlert key={id} message={message} />
         ))}
@@ -38,9 +38,10 @@ const FadeOutAlert = ({ message }) => {
 
   return (
     <div
-      className={`alert alert-info alert-dismissible fade ${visible ? 'show' : ''}`}
+      className={`alert alert-dark text-dark alert-dismissible fade ${visible ? 'show' : ''}` }
       role="alert"
       style={{
+        backGroundColor: '#ff0000',
         display: 'flex',
         justifyContent: 'center',
         alignItems: 'center',

@@ -16,7 +16,7 @@ const ChatMenuCard = ({ title, description, to }) => {
       </div>
 
       <div
-        className="bg-white rounded-circle d-flex justify-content-center align-items-center"
+        className="bg-white rounded-`circle` d-flex justify-content-center align-items-center"
         style={{ width: '50px', height: '50px' }}
       >
         <i className="bi bi-chevron-right" style={{ color: '#0dcaf0', fontSize: '20px' }}></i>

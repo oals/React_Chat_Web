@@ -41,7 +41,7 @@ const ChatArchivePage = () => {
   };
 
   return (
-    <div className="d-flex flex-column justify-content-start align-items-center min-vh-100 pt-5 bg-light">
+    <div className="d-flex flex-column justify-content-start align-items-center min-vh-100 pt-5 " style={{backgroundColor: '#111418'}}>
 
       {isChatArchiveOpen && (
         <>
@@ -60,20 +60,21 @@ const ChatArchivePage = () => {
       )}
 
       <div className="w-50">
-        <div className="w-25 mb-3">
+        <h3 className="text-white mt-4">채팅 아카이브</h3>
+
+        <div className="w-25 mt-5 mb-3">
           <div className="d-flex gap-2">
-            <button
-              className={`btn ${!chatArchivesOption ? 'btn-info active text-white' : 'btn-outline-info custom-hover-white'}`}
-              onClick={() => {
-                setCurrentPage(1)
-                setChatArchivesOption(false)
-              }}
-            >
+          <button
+            className={`btn d-flex align-items-center justify-content-center px-3 py-1 rounded-pill border-0 ${!chatArchivesOption ? 'btn-dark text-white' : ''}`}
+            onClick={() => {
+              setCurrentPage(1);
+              setChatArchivesOption(false);
+            }}
+          >
               전체
             </button>
-
             <button
-              className={`btn ${chatArchivesOption ? 'btn-info active text-white' : 'btn-outline-info custom-hover-white'}`}
+              className={`btn d-flex align-items-center justify-content-center px-3 py-1 rounded-pill border-0 ${chatArchivesOption ? 'btn-dark text-white' : ''}`}
               onClick={() => {
                 setCurrentPage(1)
                 setChatArchivesOption(true)
@@ -85,56 +86,63 @@ const ChatArchivePage = () => {
         </div>
 
         <div className="container p-0">
-          <div className="row">
+          <div>
             {chatArchives.length === 0 ? (
               <tr className="d-flex justify-content-center">
                 <td colSpan="5" className="text-center py-5 text-muted">
-                  <i className="bi bi-emoji-frown text-info" style={{ fontSize: '2rem' }}></i><br />
-                  <span className="text-info">{chatArchivesOption ? '즐겨찾기한 아카이브가 존재하지 않습니다.' : '저장된 아카이브가 존재하지 않습니다.'} </span>
+                  <i className="bi bi-emoji-frown text-white" style={{ fontSize: '2rem' }}></i><br />
+                  <span className="text-white">{chatArchivesOption ? '즐겨찾기한 아카이브가 존재하지 않습니다.' : '저장된 아카이브가 존재하지 않습니다.'} </span>
                 </td>
               </tr>
             ) : (
               chatArchives.map((chatArchive, index) => (
-                <div className="col-md-4 d-flex justify-content-center mb-4" key={chatArchive.chatArchiveId}>
-                  <div className="card shadow-sm" style={{ width: "100%", maxWidth: "35rem" }}>
-                    <div className="card-body">
-                      <div className="d-flex align-items-center gap-1">
-                        <i
-                          className={chatArchive.chatArchiveBookmarks ? "bi bi-star-fill" : "bi bi-star"}
-                          style={{
-                            color: chatArchive.chatArchiveBookmarks ? "gold" : "inherit",
-                            fontSize: "1.5rem",
-                            cursor: "pointer",
-                          }}
-                          onClick={() => {
-                            setChatArchiveBookmarks(chatArchive.chatArchiveId);
-                            handleToggleBookmark(chatArchive.chatArchiveId);
-                            if (!chatArchive.chatArchiveBookmarks) {
-                              alert("즐겨찾기가 완료되었습니다");
-                            }
-                          }}
-                        ></i>
+              <div className="d-flex justify-content-start mb-4" key={chatArchive.chatArchiveId}>
+                <div className="card shadow-sm w-100 bg-dark">
+                  <div className="card-body">
+                    <div className="d-flex justify-content-between align-items-start">
+                      <div className="d-flex flex-column">
+                        <div className="d-flex align-items-center gap-2">
+                          <h6
+                            className="card-title  text-white fw-semibold"
+                            style={{ cursor: 'pointer' }}
+                            onClick={() => {
+                              setChatArchiveId(chatArchive.chatArchiveId);
+                              setIsChatArchiveOpen(true);
+                            }}
+                          >
+                            {chatArchive.chatArchiveTitle}
+                          </h6>
 
-                        <h6
-                          className="card-title mb-0 text-info fw-semibold"
-                          style={{ cursor: 'pointer' }}
-                          onClick={() => {
-                            setChatArchiveId(chatArchive.chatArchiveId);
-                            setIsChatArchiveOpen(true);
-                          }}
-                        >
-                          {chatArchive.chatArchiveTitle}
-                        </h6>
+                          <div className="mb-2">
+                          <i
+                            className={chatArchive.chatArchiveBookmarks ? "bi bi-star-fill" : "bi bi-star"}
+                            style={{
+                              color: chatArchive.chatArchiveBookmarks ? "gold" : "white",
+                              fontSize: "1.0rem",
+                              cursor: "pointer",
+                            }}
+                            onClick={() => {
+                              setChatArchiveBookmarks(chatArchive.chatArchiveId);
+                              handleToggleBookmark(chatArchive.chatArchiveId);
+                              if (!chatArchive.chatArchiveBookmarks) {
+                                alert("즐겨찾기가 완료되었습니다");
+                              }
+                            }}
+                          ></i>
+                          </div>
+
+
+                        </div>
+
+                        <p className="card-text text-secondary fw-semibold  mb-0">
+                          {chatArchive.chatArchiveDate.replace("T", " ")}
+                        </p>
                       </div>
 
-                      <p className="card-text text-secondary mb-2 fw-semibold">
-                        {chatArchive.chatArchiveDate.replace("T", " ")}
-                      </p>
 
-                      <div className="d-flex justify-content-start">
-
+                      <div>
                         <button
-                          className="btn btn-danger btn-sm d-flex align-items-center gap-2"
+                          className="btn text-white btn-sm d-flex align-items-center gap-2"
                           onClick={async () => {
                             await delChatArchive(chatArchive.chatArchiveId);
                             await fetchChatArchive(currentPage);
@@ -147,6 +155,10 @@ const ChatArchivePage = () => {
                     </div>
                   </div>
                 </div>
+              </div>
+
+
+
               ))
             )}
           </div>

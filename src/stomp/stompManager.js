@@ -17,7 +17,7 @@ export const connectMatching = (userId, onMatchReceived) => {
         return;
       }
 
-      const socket = new SockJS(`${BASE_MATCH_URL}ws`);
+      const socket = new SockJS('http://localhost:8080/ws');
       matchingClient = new Client({
         webSocketFactory: () => socket,
         reconnectDelay: 5000,
@@ -48,7 +48,7 @@ export const connectChat = (topic, memberId, onMatchReceived) => {
         return;
       }
 
-      const socket = new SockJS(`${BASE_API_URL}ws`);
+      const socket = new SockJS('http://localhost:8102/ws');
       chatClient = new Client({
         webSocketFactory: () => socket,
         reconnectDelay: 5000,

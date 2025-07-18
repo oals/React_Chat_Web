@@ -10,7 +10,7 @@ import { matchStart, matchCancel, chatSend, chatSave } from '../utils/api';
 import { useMember } from '../contexts/MemberContext';
 import { useAlert } from '../components/AlertProvider';
 
-const ChatRoomPage = () => {
+const ChatRoomPage = ({matchCancelCallBack}) => {
 
  const { memberId } = useMember();
  const [message, setMessage] = useState('');
@@ -48,7 +48,9 @@ const ChatRoomPage = () => {
           setIsMatching(true);
           setChatRoomId(chatRoomDto.chatRoomId);
           alert('매칭이 완료 되었습니다')
-          setChatStartTime(new Date().toISOString().slice(0, 19).replace("T", " "))
+
+          const now = new Date();
+          setChatStartTime(now);
 
           await connectChat(`/topic/chat/${chatRoomDto.chatRoomId}`, memberId, (msg) => {
              if (msg.chatMessage.toLowerCase() === 'q') {
@@ -105,22 +107,28 @@ const ChatRoomPage = () => {
   };
 
   return (
-    <div className="min-vh-100 d-flex justify-content-center align-items-center">
-      <div className="bg-light text-dark border border-3 rounded  w-75 d-flex flex-column justify-content-between" style={{ maxWidth: '1000px', height: '700px' }}>
+  <div style={{ width:  isMatching ? '750px' : '900px', height: '700px',}}>
+     {!isMatching ? (
+        <MatchingWaitBox
+          isMatching={isMatching}
+          matchCancelCallBack={()=>{
+              matchCancelCallBack()}
+          }
+        />
+      ) : (
 
-        {isMatching && (
-          <ChatStartMessageBox
-            startDate={chatStartTime}
-          />
-        )}
+    <div className="d-flex w-100 justify-content-center align-items-center" style={{backgroundColor: '#111418'  }}>
+      <div className="text-dark w-100 d-flex flex-column justify-content-between border border-dark" style={{ maxWidth: '750px', minHeight: '700px'}}>
 
-        {!isMatching && (
-          <MatchingWaitBox
-            isMatching={isMatching}
-          />
-        )}
+        <div>
+        </div>
 
-        <div ref={scrollRef} className="bg-white p-3" style={{ height: '620px', overflowY: 'auto' }}>
+        <ChatStartMessageBox
+           startDate={chatStartTime}
+        />
+
+
+        <div ref={scrollRef} className="p-3" style={{ height: '500px', overflowY: 'auto' }}>
 
           <ChatMessage messages={messageList} />
 
@@ -144,30 +152,38 @@ const ChatRoomPage = () => {
         )}
 
         {isExit && (
-          <ChatExitMessageBox
-            isReMatching={() => {
-              setMessageList([])
-              disconnectChat();
-              setIsExit(false)
-              setIsMatching(false)
-              setIsChatArchiveSave(false)
-            }}
-            setIsShowChatSavePopupOpenCallBack={() => setIsShowChatSavePopup(true)}
-          />
+       <div
+         className="position-fixed w-50 translate-middle"
+         style={{ top: '80%', left: '40%' }}
+        >
+           <ChatExitMessageBox
+             matchCancelCallBack={()=> matchCancelCallBack()}
+             isReMatching={() => {
+               setMessageList([])
+               disconnectChat();
+               setIsExit(false)
+               setIsMatching(false)
+               setIsChatArchiveSave(false)
+             }}
+             setIsShowChatSavePopupOpenCallBack={() => setIsShowChatSavePopup(true)}
+           />
+        </div>
+
         )}
 
-        {(isMatching) && (
           <div className="d-flex align-items-center gap-1">
             <input
               type="text"
-              className="form-control flex-grow-1 rounded-3 shadow-sm border focus-ring focus-ring-primary"
+              className="form-control flex-grow-1 rounded-3 shadow-sm custom-input border-dark"
               placeholder="대화를 시작해보세요."
               value={message}
               onChange={handleChange}
               style={{
-                fontSize: '15px',
-                backgroundColor: '#f9f9f9',
-                transition: 'all 0.2s ease-in-out',
+                  backgroundColor: '#283039',
+                  borderTopRightRadius: '0.75rem',
+                  borderBottomRightRadius: '0.75rem',
+                  color: '#ffffff',
+                  paddingLeft: '0.75rem'
               }}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {
@@ -178,15 +194,16 @@ const ChatRoomPage = () => {
             />
             <button
               onClick={handleSend}
-              className="btn btn-info text-light"
+              className="btn btn-dark text-light"
               style={{ minWidth: '80px' }}
               disabled={isExit}
             >
               전송
             </button>
           </div>
-        )}
       </div>
+    </div>
+        )}
     </div>
   );
 };

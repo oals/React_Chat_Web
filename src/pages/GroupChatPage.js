@@ -41,7 +41,7 @@ const GroupChatPage = () => {
    }, [fetchGroupChatRoom, groupChatRoomTopic]);
 
 return (
-    <div className="d-flex flex-column justify-content-start align-items-center min-vh-100 pt-5 bg-light">
+    <div className="d-flex flex-column justify-content-start align-items-center min-vh-100 pt-5" style={{backgroundColor: '#111418'}}>
       {isGroupChatCreateBoxOpen && (
         <>
           <div
@@ -81,153 +81,186 @@ return (
           </div>
         </>
       )}
-      <div className="w-75">
-        <div className="w-100">
-          <div className="w-100 mb-3">
-            <div className="d-flex justify-content-between align-items-end gap-2">
-              <div className="d-flex flex-wrap gap-1">
-                {groupChatRoomTopics.map((topic) => (
-                  <button
-                    key={topic}
-                    className={`btn white-nowrap px-3 ${groupChatRoomTopic === topic ? 'btn-info text-white' : 'btn-outline-info custom-hover-white'}`}
-                    style={{ whiteSpace: 'nowrap' }}
-                    onClick={() => {
-                      setCurrentPage(1)
-                      setSearchText("")
-                      setGroupChatRoomTopic(topic)
-                    }}
-                  >
-                    {topic}
-                  </button>
-                ))}
-              </div>
-              <div>
 
-                <div className="d-flex gap-2 mb-2 justify-content-end">
-                  <button
-                    className="btn btn-info active white-nowrap px-3 text-white"
-                    onClick={() => setIsGroupChatCreateBoxOpen(true)}
-                    style={{ whiteSpace: 'nowrap' }}
-                  >
-                    방 생성
-                  </button>
-
-                  <button
-                    className="btn btn-info active white-nowrap text-white"
-                    onClick={() => {
-                      alert('새로고침');
-                      fetchGroupChatRoom(currentPage);
-                    }}
-                    style={{ whiteSpace: 'nowrap' }}
-                  >
-                    <i className="bi bi-arrow-clockwise"></i>
-                  </button>
-                </div>
-
-                <div className="input-group" style={{ minWidth: '600px' }}>
-                  <input
-                    type="text"
-                    className="form-control"
-                    placeholder="검색어를 입력하세요"
-                    aria-label="Search"
-                    value={searchText}
-                    onChange={(e) => setSearchText(e.target.value)}
-                    onKeyDown={(e) => {
-                      if (e.key === 'Enter') {
-                        fetchGroupChatRoom(1, searchText)
-                      }
-                    }}
-                  />
-
-                  <button
-                    className="btn btn-outline-info custom-hover-white"
-                    type="button"
-                    onClick={() => {
-                      fetchGroupChatRoom(1, searchText)
-                    }}
-                  >
-                    <i className="bi bi-search"></i>
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
+      <div className="w-75 d-flex flex-column justify-content-start align-items-start">
+        <div>
+            <h4 className="text-white"> 그룹채팅 </h4>
         </div>
-        <table className="table table-borderless">
-          <thead className="table-light border-bottom">
-            <tr>
-              <th className="text-center">#</th>
-              <th>제목</th>
-              <th className="text-center">주제</th>
-              <th className="text-center">인원</th>
-              <th className="text-center">참가</th>
-            </tr>
-          </thead>
-          <tbody>
-            {groupChatRooms.length === 0 ? (
-              <tr>
-                <td colSpan="5" className="text-center py-5 text-muted ">
-                  <i className="bi bi-emoji-frown text-info" style={{ fontSize: '2rem' }}></i><br />
-                  <span className="text-info">참여 가능한 그룹 채팅방이 없습니다.</span>
-                </td>
-              </tr>
-            ) : (
-              groupChatRooms.map((room, index) => (
-                <tr key={room.groupChatRoomId} className="align-middle border-bottom">
-                  <td className="text-center text-info fw-bold">
-                    {totalCount - ((currentPage - 1) * 10) - index}
-                  </td>
-                  <td
-                    style={{ cursor: 'pointer' }}
-                    className="fw-semibold text-info"
-                    onClick={ async () => {
-                      setGroupChatRoom(room);
-                      await joinGroupChatRoom(room.groupChatRoomId, room.groupChatRoomTopic);
-                      await groupChatJoinMessage(room.groupChatRoomId);
-                      setIsGroupChatBoxOpen(true);
-                    }}
-                  >
-                    <i className="bi bi-chat-square-text me-2 "></i>
-                    {room.groupChatRoomTitle}
-                  </td>
-                  <td className="text-center">
-                    <span className="badge bg-info">
-                      {room.groupChatRoomTopic.trim() === '' ? '자유' : room.groupChatRoomTopic}
-                    </span>
-                  </td>
-                  <td className="text-center text-info">
-                    {room.currentParticipants}명
-                  </td>
-                  <td className="text-center">
-                    <button
-                      className="btn btn-outline-info btn-sm px-4 rounded-pill custom-hover-white"
-                      onClick={ async () => {
-                        setGroupChatRoom(room);
-                        await joinGroupChatRoom(room.groupChatRoomId, room.groupChatRoomTopic);
-                        await groupChatJoinMessage(room.groupChatRoomId);
-                        setIsGroupChatBoxOpen(true);
-                      }}
-                    >
-                      입장
-                    </button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      </div>
 
-      {totalCount !== 0 && (
-        <Pagination
-          currentPage={currentPage}
-          totalPages={Math.ceil(totalCount / 10)}
-          onPageChange={(page) => {
-            setCurrentPage(page)
-            fetchGroupChatRoom(page)
-          }}
-        />
-      )}
+        <div className="w-50  py-3 ">
+          <label className="w-100">
+            <div className="input-group" style={{ height: '48px', borderRadius: '0.75rem', backgroundColor: '#283039' }}>
+              <span className="input-group-text border-0" style={{ backgroundColor: '#283039', color: '#9caaba', borderTopLeftRadius: '0.75rem', borderBottomLeftRadius: '0.75rem' }}>
+               <i class="bi bi-search"></i>
+              </span>
+              <input
+                type="text"
+                className="form-control border-0 text-white custom-input"
+                style={{
+                  backgroundColor: '#283039',
+                  borderTopRightRadius: '0.75rem',
+                  borderBottomRightRadius: '0.75rem',
+                  color: '#ffffff',
+                  paddingLeft: '0.75rem'
+                }}
+                 onChange={(e) => setSearchText(e.target.value)}
+                 onKeyDown={(e) => {
+                   if (e.key === 'Enter') {
+                     fetchGroupChatRoom(1, searchText)
+                   }
+                 }}
+                placeholder="채팅방을 검색해보세요."
+              />
+            </div>
+          </label>
+        </div>
+        <div className="mt-3">
+            <h4 className="text-white"> 카테고리 </h4>
+        </div>
+
+          <div className="d-flex justify-content-between align-items-end w-100">
+             <div className="d-flex flex-wrap gap-2">
+               {groupChatRoomTopics.map((topic) => (
+                 <button
+                   key={topic}
+                   className={`d-flex align-items-center justify-content-center px-3 py-1 rounded-pill border-0 ${
+                     groupChatRoomTopic === topic
+                       ? 'bg-light text-dark'
+                       : 'bg-dark text-white bg-opacity-75'
+                   }`}
+                   style={{
+                     height: '32px',
+                     backgroundColor: groupChatRoomTopic === topic ? '' : '#283039',
+                     fontSize: '0.875rem',
+                     fontWeight: '500',
+                     lineHeight: 'normal',
+                     whiteSpace: 'nowrap'
+                   }}
+                   onClick={() => {
+                     setCurrentPage(1);
+                     setSearchText('');
+                     setGroupChatRoomTopic(topic);
+                   }}
+                 >
+                   {topic}
+                 </button>
+               ))}
+             </div>
+
+            <div className="d-flex flex-wrap gap-2">
+              <button
+                className="btn btn-md active white-nowrap border-0 px-3 text-white"
+                onClick={() => setIsGroupChatCreateBoxOpen(true)}
+                style={{ whiteSpace: 'nowrap', backgroundColor : '#283039' }}
+              >
+                방 생성
+              </button>
+
+              <button
+                className="btn btn-md active white-nowrap border-0 text-white"
+                onClick={() => {
+                  alert('새로고침');
+                  fetchGroupChatRoom(currentPage);
+                }}
+                style={{ whiteSpace: 'nowrap', backgroundColor : '#283039' }}
+              >
+                <i className="bi bi-arrow-clockwise"></i>
+              </button>
+            </div>
+           </div>
+
+
+       <div className="w-100">
+        <div className="table-responsive rounded-4 overflow-hidden border border-dark mt-3">
+          <table className=" mb-0 text-white w-100" >
+            <thead>
+              <tr className="custom-table-header">
+                <th style={{ width: '10%' }} className="px-4 py-3 text-sm fw-medium text-center">번호</th>
+                <th style={{ width: '40%' }} className="px-4 py-3 text-sm fw-medium text-center">제목</th>
+                <th style={{ width: '20%' }} className="px-4 py-3 text-sm fw-medium text-center">카테고리</th>
+                <th style={{ width: '10%' }} className="px-4 py-3 text-sm fw-medium text-center">인원</th>
+                <th style={{ width: '20%' }} className="px-4 py-3 text-sm fw-medium text-secondary text-center">입장</th>
+              </tr>
+            </thead>
+            <tbody>
+            {groupChatRooms.length === 0 ? (
+               <tr>
+                 <td colSpan="5" className="text-center py-5 text-muted ">
+                   <i className="bi bi-emoji-frown text-white" style={{ fontSize: '2rem' }}></i><br />
+                   <span className="text-white">참여 가능한 그룹 채팅방이 없습니다.</span>
+                 </td>
+               </tr>
+             ) : (
+               groupChatRooms.map((room, index) => (
+                 <tr
+                   key={room.groupChatRoomId}
+                   className="align-middle"
+                   style={{ borderBottom: '0.5px solid #3b4754' }}
+                 >
+
+                   <td className="text-center fw-bold p-3  text-secondary" style={{ width: '10%' }}>
+                     {totalCount - ((currentPage - 1) * 10) - index}
+                   </td>
+
+                   <td
+                     style={{ cursor: 'pointer', width: '40%' }}
+                     className="fw-semibold text-white"
+                     onClick={ async () => {
+                       setGroupChatRoom(room);
+                       await joinGroupChatRoom(room.groupChatRoomId, room.groupChatRoomTopic);
+                       await groupChatJoinMessage(room.groupChatRoomId);
+                       setIsGroupChatBoxOpen(true);
+                     }}
+                   >
+                     {room.groupChatRoomTitle}
+                   </td>
+
+                   <td className="text-center" style={{ width: '20%' }}>
+                     <span className="badge bg-dark">
+                       {room.groupChatRoomTopic.trim() === '' ? '자유' : room.groupChatRoomTopic}
+                     </span>
+                   </td>
+
+                   <td className="text-center text-white" style={{ width: '10%' }}>
+                     {room.currentParticipants}명
+                   </td>
+
+                   <td className="text-center" style={{ width: '20%' }}>
+                     <button
+                       className="btn btn-outline-secondary btn-sm px-4 rounded-pill custom-hover-white"
+                       onClick={ async () => {
+                         setGroupChatRoom(room);
+                         await joinGroupChatRoom(room.groupChatRoomId, room.groupChatRoomTopic);
+                         await groupChatJoinMessage(room.groupChatRoomId);
+                         setIsGroupChatBoxOpen(true);
+                       }}
+                     >
+                       입장
+                     </button>
+                   </td>
+
+
+                 </tr>
+               ))
+             )}
+            </tbody>
+          </table>
+        </div>
+
+        <div className="d-flex justify-content-center mt-3">
+          {totalCount !== 0 && (
+                 <Pagination
+                   currentPage={currentPage}
+                   totalPages={Math.ceil(totalCount / 10)}
+                   onPageChange={(page) => {
+                     setCurrentPage(page)
+                     fetchGroupChatRoom(page)
+                   }}
+                 />
+               )}
+        </div>
+      </div>
+     </div>
     </div>
   );
 };

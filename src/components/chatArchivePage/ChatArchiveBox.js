@@ -30,14 +30,13 @@ const ChatArchiveBox = ({ chatArchiveId, chatArchiveOpenCallBack }) => {
 
 
   return (
-    <div className=" position-fixed top-50 start-50 translate-middle p-3 bg-white border rounded shadow" style={{ zIndex: 1051, width: '700px', height: '700px' }}>
+    <div className=" position-fixed top-50 start-50 translate-middle p-3 border border-dark rounded shadow" style={{ zIndex: 1051, width: '700px', height: '700px',  backgroundColor: '#111418' }}>
       <div
         ref={scrollRef}
-        className="bg-white border-top border-bottom border-3"
-        style={{ height: '600px', overflowY: 'auto' }}
+        className="border border-dark p-2"
+        style={{ height: '600px', overflowY: 'auto', backgroundColor: '#111418' }}
       >
         <ChatStartMessageBox
-          startMessage={'익명의 상대와 1:1 채팅이 시작되었습니다! '}
           startDate={chatArchiveCreateDate ? chatArchiveCreateDate.replace("T", " ").split(".")[0] : ''}
         />
 
@@ -47,8 +46,8 @@ const ChatArchiveBox = ({ chatArchiveId, chatArchiveOpenCallBack }) => {
 
       </div>
 
-      <div className="d-flex justify-content-center gap-2 pt-3">
-        <button className="btn btn-secondary" onClick={() => chatArchiveOpenCallBack(false)}>
+      <div className="d-flex justify-content-center gap-2 pt-3 ">
+        <button className="btn btn-dark" onClick={() => chatArchiveOpenCallBack(false)}>
           닫기
         </button>
       </div>

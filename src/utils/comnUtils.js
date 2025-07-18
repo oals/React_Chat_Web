@@ -10,3 +10,13 @@ export const formatTime = (totalSeconds) => {
 
 };
 
+
+export const formatChatStartTime = (dateStr) => {
+    const dateObj = new Date(dateStr);
+    return dateObj.toLocaleTimeString('en-US', {
+      hour: 'numeric',
+      minute: '2-digit',
+      hour12: true,
+    });
+  };
+

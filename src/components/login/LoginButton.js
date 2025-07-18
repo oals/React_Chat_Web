@@ -62,11 +62,11 @@ const LoginButton = () => {
 
 
   return (
-    <div>
+    <div className=" d-flex align-items-center">
       {user ? (
         <>
-          <span className="me-3 fw-semibold">{user.displayName}</span>
-          <button className="btn btn-outline-danger btn-sm" onClick={handleLogout}>
+          <span className="  me-3 fw-semibold text-light">{user.displayName}</span>
+          <button className="btn btn-outline-danger btn-sm " onClick={handleLogout}>
             로그아웃
           </button>
         </>

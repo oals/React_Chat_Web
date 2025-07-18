@@ -11,7 +11,7 @@ const Pagination = ({currentPage, totalPages, onPageChange }) => {
       <ul className="pagination">
         <li className="page-item">
           <button
-            className="page-link bg-info text-white"
+            className="page-link bg-dark border-dark text-white"
             onClick={() => goToPage(currentPage - 1)}
             disabled={currentPage === 1}
           >
@@ -22,10 +22,10 @@ const Pagination = ({currentPage, totalPages, onPageChange }) => {
         {[...Array(totalPages)].map((_, idx) => (
           <li
             key={idx + 1}
-            className={`page-item ${currentPage === idx + 1 ? 'active' : ''}`}
+            className={`page-item ${currentPage === idx + 1 ? 'active border-dark' : ''}`}
           >
             <button
-              className="page-link bg-info text-white"
+              className="page-link bg-dark text-white border-dark"
               onClick={() => goToPage(idx + 1)}
             >
               {idx + 1}
@@ -35,7 +35,7 @@ const Pagination = ({currentPage, totalPages, onPageChange }) => {
 
         <li className="page-item">
           <button
-            className="page-link bg-info text-white"
+            className="page-link bg-dark text-white border-dark"
             onClick={() => goToPage(currentPage + 1)}
             disabled={currentPage === totalPages}
           >

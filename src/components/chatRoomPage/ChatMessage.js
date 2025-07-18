@@ -12,7 +12,7 @@ const ChatMessage = ({ messages }) => {
       if (msg.isJoinNotice === true){
          return (
             <div key={index} className="d-flex justify-content-center my-1">
-             <div className="bg-light text-secondary px-3 py-1 rounded-pill small">
+             <div className="bg-dark text-white px-3 py-1 rounded-pill small">
                 익명{msg.senderId}님이 입장하셨습니다.
              </div>
            </div>
@@ -21,7 +21,7 @@ const ChatMessage = ({ messages }) => {
       } else if (msg.isExitNotice === true) {
          return (
             <div key={index} className="d-flex justify-content-center my-1">
-                        <div className="bg-light text-secondary px-3 py-1 rounded-pill small">
+                        <div className="bg-dark text-white px-3 py-1 rounded-pill small">
                            익명{msg.senderId}님이 퇴장하셨습니다.
                         </div>
                       </div>
@@ -29,7 +29,7 @@ const ChatMessage = ({ messages }) => {
       } else if (msg.sender === 'me') {
           return (
             <div key={index} className="d-flex justify-content-end mb-2">
-              <div className="bg-info text-white p-2 rounded-pill">
+              <div className="bg-dark text-white p-2 rounded-pill">
                 {msg.text}
               </div>
             </div>
@@ -37,14 +37,12 @@ const ChatMessage = ({ messages }) => {
       } else {
           return (
           <div key={index} className="d-flex flex-column align-items-start mb-2">
-            <div className="bg-white text-secondary px-2 py-1 rounded small">
+            <div className="bg-dark text-secondary px-2 py-1 rounded small">
               익명{msg.senderId}
             </div>
             <div
-              className="px-3 py-2 rounded"
+              className="px-3 py-2 rounded bg-dark text-white"
               style={{
-                backgroundColor: '#e9ecef',
-                color: '#212529',
                 borderRadius: '15px 15px 15px 0px',
                 maxWidth: '70%',
               }}

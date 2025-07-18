@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import ChatMessage from '../chatRoomPage/ChatMessage';
-import ChatStartMessageBox from '../chatRoomPage/ChatStartMessageBox';
 import { connectChat, disconnectChat } from '../../stomp/stompManager';
 import { useMember } from '../../contexts/MemberContext';
 import { groupChatSend, groupChatRoomExit, getGroupChatRoomMemberCount } from '../../utils/api';
@@ -105,32 +104,33 @@ const GroupChatRoomBox = ({ groupChatRoom, isShowGroupChatBoxOpenCallBack, initG
 
   return (
     <div
-      className="position-fixed top-50 start-50 translate-middle p-2 bg-white border rounded shadow"
-      style={{ zIndex: 1051, width: '700px', height: '750px' }}
+      className="position-fixed top-50 start-50 translate-middle p-2 border-dark rounded shadow "
+      style={{ zIndex: 1051, width: '700px', height: '750px', backgroundColor: '#111418'}}
     >
-      <div className="d-flex justify-content-between align-items-center w-100 px-3 py-2" style={{ backgroundColor: '#f8f9fa', borderBottom: '2px solid #dee2e6', borderRadius: '0 0 0px 0px' }}>
+      <div className="d-flex justify-content-between align-items-center w-100 px-3 py-2 border-bottom border-dark" style={{ backgroundColor: '#111418', borderRadius: '0 0 0px 0px' }}>
 
-        <div className="text-primary fw-semibold" style={{ whiteSpace: 'nowrap', fontSize: '1.1rem' }}>
-          <span className={`badge bg-${groupChatRoom.groupChatRoomTopic === '' ? 'secondary' : 'info'} `}>
+        <div className="text-dark fw-semibold" style={{ whiteSpace: 'nowrap', fontSize: '1.1rem' }}>
+          <span className={`badge bg-${groupChatRoom.groupChatRoomTopic === '' ? 'secondary' : 'dark'} `}>
             {groupChatRoom.groupChatRoomTopic.trim() === '' ? '자유' : groupChatRoom.groupChatRoomTopic}
           </span>
         </div>
 
-        <div className="text-center flex-grow-1 fw-bold" style={{ fontSize: '1.2rem', color: '#343a40' }}>
+        <div className="text-center flex-grow-1 fw-bold" style={{ fontSize: '1.2rem', color: '#ffffff' }}>
           {groupChatRoom.groupChatRoomTitle}
         </div>
 
         <div className="d-flex justify-content-end align-items-center gap-2">
           <div className="d-flex justify-content-end align-items-center gap-3">
-            <div className="text-muted text-end" style={{ whiteSpace: 'nowrap', fontSize: '0.85rem' }}>
-              👥 {memberCount}명
+            <div className="text-muted text-end mb-1" style={{ whiteSpace: 'nowrap', fontSize: '0.85rem',color: '#ffffff'}}>
+            <span style={{fontSize:'20px'}}>👥</span>
+             <span className="text-white"> {memberCount}명 </span>
             </div>
-            <button className="btn btn-sm btn-outline-danger" title="나가기"
+            <button className="btn btn-sm bg-dark rounded-circle" title="나가기"
               onClick={() => {
                 isShowGroupChatBoxOpenCallBack()
               }}
             >
-              <i className="bi bi-box-arrow-right"></i>
+              <i className="bi bi-box-arrow-right text-white "></i>
             </button>
           </div>
         </div>
@@ -138,11 +138,11 @@ const GroupChatRoomBox = ({ groupChatRoom, isShowGroupChatBoxOpenCallBack, initG
 
       <div
         ref={scrollRef}
-        className="bg-white p-3"
-        style={{ height: '640px', overflowY: 'auto' }}
+        className="p-3"
+        style={{ height: '640px', overflowY: 'auto',backgroundColor: '#111418' }}
       >
         <div className="d-flex justify-content-center my-1">
-          <div className="bg-light text-secondary px-3 py-1 rounded-pill small">
+          <div className="bg-dark text-white px-3 py-1 rounded-pill small">
             채팅방에 입장하셨습니다
           </div>
         </div>
@@ -155,14 +155,16 @@ const GroupChatRoomBox = ({ groupChatRoom, isShowGroupChatBoxOpenCallBack, initG
       <div className="d-flex align-items-center gap-1">
         <input
           type="text"
-          className="form-control flex-grow-1 rounded-3 shadow-sm border focus-ring focus-ring-primary"
+          className="form-control flex-grow-1 rounded-3 shadow-sm border border-0  custom-input"
           placeholder="대화를 시작해보세요."
           value={message}
           onChange={handleChange}
           style={{
-            fontSize: '15px',
-            backgroundColor: '#f9f9f9',
-            transition: 'all 0.2s ease-in-out',
+              backgroundColor: '#283039',
+              borderTopRightRadius: '0.75rem',
+              borderBottomRightRadius: '0.75rem',
+              color: '#ffffff',
+              paddingLeft: '0.75rem'
           }}
           onKeyDown={(e) => {
             if (e.key === 'Enter') {
@@ -174,7 +176,7 @@ const GroupChatRoomBox = ({ groupChatRoom, isShowGroupChatBoxOpenCallBack, initG
           onClick={() => {
             handleSend();
           }}
-          className="btn btn-info text-light"
+          className="btn btn-dark text-light"
           style={{ minWidth: '80px' }}
         >
           전송

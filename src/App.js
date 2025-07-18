@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import NavigationBar from './components/NavigationBar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
-import ChatPage from './pages/ChatPage';
 import ChatRoomPage from './pages/ChatRoomPage';
 import ChatArchivePage from './pages/ChatArchivePage';
 import GroupChatPage from './pages/GroupChatPage';
@@ -19,17 +18,10 @@ function App() {
        <Router>
           <NavigationBar />
           <AlertProvider>
-          <div class="d-flex flex-column min-vh-100">
+          <div className="d-flex flex-column min-vh-100">
                <main className="mt-5 flex-grow-1">
                  <Routes>
                    <Route path="/" element={<HomePage />} />
-                   <Route path="/chat"
-                     element={
-                       <PrivateRoute>
-                         <ChatPage />
-                       </PrivateRoute>
-                     }
-                   />
 
                    <Route path="/chatRoom"
                        element={

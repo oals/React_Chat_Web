@@ -13,9 +13,35 @@
   }
 }
 
-.custom-hover-white:hover {
-  color: white !important;
+.page-item.active .page-link:focus {
+  background-color: #283039 !important;
+  border-color: #ffffff;
+  box-shadow: none !important;
 }
+
+.hover-scale {
+  transition: transform 0.2s ease-in-out;
+}
+
+.hover-scale:hover {
+  transform: scale(1.03);
+}
+
+.custom-input::placeholder {
+  color: #9caaba;
+}
+
+.custom-input:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: transparent;
+}
+
+.custom-table-header {
+  background-color: #1b2127 !important;
+  color: white;
+}
+
 
 .App-header {
   background-color: #282c34;
