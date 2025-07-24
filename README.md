@@ -409,7 +409,8 @@
 ### 홈
 | 홈 |
 |---------|
-| <img src="https://github.com/user-attachments/assets/7e262c12-95c9-44ab-b0a4-ee6beab318a3" width="900"/> | 
+| <img width="900" alt="cxzcvv" src="https://github.com/user-attachments/assets/cc048f11-7e1b-4b9f-b706-a103c562eabc" /> | 
+
 
 
 #### ✅ 홈 설명
